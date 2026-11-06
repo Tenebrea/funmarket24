@@ -91,10 +91,6 @@ header {
     color: #A06060;
 }
 
-.action-item img {
-    height: 18px;
-}
-
 .action-item div {
     max-height: 100%;
 }
