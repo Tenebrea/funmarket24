@@ -28,24 +28,27 @@
     padding: 0;
 }
 
-
 a {
     text-decoration: none;
     color: inherit;
 }
 
+header section footer {
+    display: flex;
+    width: 1920px;
+}
+
 header {
     background-color: #F8F5F0;
-    width: 100%;
 }
 
 .header-inner {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    flex: 1 1 1650px;
     flex-direction: row;
-    gap: 20px;
-    padding: 32px 135px;
+    gap: 23px;
+    padding: 26px 135px;
 }
 
 .logo {
@@ -62,6 +65,7 @@ header {
     font-size: 16px;
     font-weight: 400;
     color: #383333;
+    margin-left: 36px;
 }
 
 .icon-wrap {
@@ -74,8 +78,8 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 32px;
-    gap: 24px;
+    gap: 38px;
+    margin-left: auto;
 }
 
 .action-item {
@@ -117,8 +121,21 @@ header {
     border-width: 0;
 }
 
+#favorite {
+    width: 20px;
+}
+
+#cart {
+    width: 25px;
+}
+
+#profile {
+    width: 21px;
+}
+
 .phone {
     color: #A06060;
+    margin-left: 30px;
 }
 
 .favorite {
