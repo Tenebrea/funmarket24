@@ -1,0 +1,142 @@
+@font-face {
+    font-family: 'Bellota';
+    src: url('./fonts/Bellota/Bellota-Regular.ttf') format('truetype');
+    font-weight: 400; 
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Bellota';
+    src: url('./fonts/Bellota/Bellota-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mulish';
+    src: url('./fonts/Mulish/Mulish-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+*, *::after, *::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header {
+    background-color: #F8F5F0;
+    width: 100%;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    gap: 20px;
+    padding: 32px 135px;
+}
+
+.logo {
+    display: block;
+    height: 62px;
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #383333;
+}
+
+.icon-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 32px;
+    gap: 24px;
+}
+
+.action-item {
+    display: flex;
+    flex-grow: 2;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    color: #A06060;
+}
+
+.action-item img {
+    height: 18px;
+}
+
+.action-item div {
+    max-height: 100%;
+}
+
+.badge {
+    position: absolute;
+    font-family: "Bellota", sans-serif;
+    top: -10px;
+    right: -12px;
+    background-color: #E25C75;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 4px 4px;
+    border-radius: 999px;
+}
+
+.primary-btn {
+    background-color: #EB6279;
+    padding: 19px 29px;
+    border-radius: 30px;
+    color: white;
+    border-width: 0;
+}
+
+.phone {
+    color: #A06060;
+}
+
+.favorite {
+    color: #FAA48F;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.px21 {
+    font-size: 21px;
+}
+
+.px18 {
+    font-size: 18px;
+}
+
+.bellota {
+    font-family: 'Bellota', sans-serif;
+}
