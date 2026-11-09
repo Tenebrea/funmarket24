@@ -16,8 +16,24 @@
 
 @font-face {
     font-family: 'Mulish';
-    src: url('./fonts/Mulish/Mulish-VariableFont_wght.ttf') format('truetype');
+    src: url('./fonts/Mulish/static/Mulish-Medium.ttf') format('truetype');
     font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mulish';
+    src: url('./fonts/Mulish/static/Mulish-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mulish';
+    src: url('./fonts/Mulish/static/Mulish-Light.ttf') format('truetype');
+    font-weight: 100;
     font-style: normal;
     font-display: swap;
 }
@@ -33,7 +49,7 @@ a {
     color: inherit;
 }
 
-header section footer {
+header, section, footer {
     display: flex;
     width: 1920px;
 }
@@ -43,12 +59,15 @@ header {
 }
 
 .header-inner {
+    gap: 23px;
+    padding: 26px 135px;
+}
+
+.container {
     display: flex;
     align-items: center;
     flex: 1 1 1650px;
     flex-direction: row;
-    gap: 23px;
-    padding: 26px 135px;
 }
 
 .logo {
@@ -117,6 +136,29 @@ header {
     border-width: 0;
 }
 
+footer {
+    background-color: #1D0839;
+}
+
+.footer-secondary {
+    border-top: #7E5FA7 solid 1px;
+    display: flex;
+    padding: 28px 135px;
+    gap: 320px;
+}
+
+#placestart {
+    margin-left: 135px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 225px;
+}
+
+#placestart img {
+    max-width: 122px;
+}
+
 #favorite {
     width: 20px;
 }
@@ -138,8 +180,16 @@ header {
     color: #FAA48F;
 }
 
+.white {
+    color: white;
+}
+
 .bold {
     font-weight: 700;
+}
+
+.light {
+    font-weight: 100;
 }
 
 .px21 {
@@ -152,4 +202,8 @@ header {
 
 .bellota {
     font-family: 'Bellota', sans-serif;
+}
+
+.mulish {
+    font-family: 'Mulish', sans-serif;
 }
