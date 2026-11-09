@@ -61,12 +61,14 @@ header {
 .header-inner {
     gap: 23px;
     padding: 26px 135px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
 }
 
 .container {
     display: flex;
     align-items: center;
-    flex: 1 1 1650px;
     flex-direction: row;
 }
 
@@ -120,10 +122,9 @@ header {
     top: -10px;
     right: -12px;
     background-color: #E25C75;
-    color: #ffffff;
+    color: white;
     font-size: 10px;
     font-weight: 700;
-    line-height: 1;
     padding: 4px 4px;
     border-radius: 999px;
 }
@@ -140,11 +141,90 @@ footer {
     background-color: #1D0839;
 }
 
+.footer-inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+}
+
 .footer-secondary {
     border-top: #7E5FA7 solid 1px;
     display: flex;
-    padding: 28px 135px;
     gap: 320px;
+    padding: 28px 135px;
+}
+
+
+.footer-main {
+    display: flex;
+    justify-content: space-between; 
+    padding: 60px 135px 85px 135px; 
+    width: 100%; 
+}
+
+.footer-icon {
+    height: 18px;
+}
+
+#rightmost {
+    margin-left: 18px;
+}
+
+.hug {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+}
+
+.search {
+    display: flex;
+    padding: 11px;
+    border-radius: 43px;
+    border: 1px solid #EB6279;
+}
+
+.search-input {
+    flex: 1;
+    font-family: 'Bellota';
+    font-size: 18px;
+    color: #979797;
+    outline: none;
+    border: none;
+    background: transparent;
+}
+
+.search-icon {
+    height: 20px;
+}
+
+.footer-doublecolumn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-doublecolumn .logo {
+    max-height: 72px;
+}
+
+.hug h3 {
+    color: white;
+    font-size: 22px;
+}
+
+.categories {
+    display: flex;
+    gap: 75px;
+
+}
+
+.category {
+    color: #F3C9D0;
+    size: 18px;
+}
+
+.category a:hover {
+    color: #FAA48E;
 }
 
 #placestart {
@@ -198,6 +278,10 @@ footer {
 
 .px18 {
     font-size: 18px;
+}
+
+.px28 {
+    font-size: 28px;
 }
 
 .bellota {
