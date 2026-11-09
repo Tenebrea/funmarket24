@@ -51,7 +51,9 @@ a {
 
 header, section, footer {
     display: flex;
-    width: 1920px;
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
 }
 
 header {
@@ -150,16 +152,23 @@ footer {
 .footer-secondary {
     border-top: #7E5FA7 solid 1px;
     display: flex;
-    gap: 320px;
-    padding: 28px 135px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 28px clamp(20px, 7vw, 135px);
+    width: 100%;
 }
 
 
 .footer-main {
     display: flex;
-    justify-content: space-between; 
-    padding: 60px 135px 85px 135px; 
-    width: 100%; 
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap; 
+    gap: 50px clamp(40px, 6vw, 120px);
+    padding: 85px clamp(20px, 7vw, 135px) 60px; 
+    width: 100%;
 }
 
 .footer-icon {
@@ -176,11 +185,17 @@ footer {
     gap: 21px;
 }
 
+#search-section {
+    flex: 1 1 380px;
+    max-width: 530px;
+}
+
 .search {
     display: flex;
     padding: 11px;
     border-radius: 43px;
     border: 1px solid #EB6279;
+    width: 100%;
 }
 
 .search-input {
@@ -201,10 +216,16 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 55px;
 }
 
 .footer-doublecolumn .logo {
-    max-height: 72px;
+    width: 235px;
+    height: auto;
+}
+
+.footer-doublecolumn .hug {
+    width: 48.2%;
 }
 
 .hug h3 {
@@ -214,8 +235,9 @@ footer {
 
 .categories {
     display: flex;
-    gap: 75px;
-
+    gap: clamp(20px, 7vw, 75px);
+    flex: 2.4;
+    justify-content: space-between;
 }
 
 .category {
@@ -227,12 +249,23 @@ footer {
     color: #FAA48E;
 }
 
+.contact {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: end;
+    flex: 1;
+}
+
+.contact .primary-btn {
+    padding: 19px 48px;
+    white-space: nowrap;
+}
+
 #placestart {
-    margin-left: 135px;
     display: flex;
     align-items: center;
     gap: 6px;
-    max-width: 225px;
 }
 
 #placestart img {
