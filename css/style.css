@@ -139,6 +139,13 @@ header {
     border-width: 0;
 }
 
+.product-cards {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 40px 30px;
+    width: clamp(60%, 1230px, 100%);
+}
+
 .product-card {
     border: #DCB8CE 1px solid;
     border-radius: 20px;
@@ -149,7 +156,7 @@ header {
 
 .product-card .product-img {
     height: auto;
-    width: clamp(200px, 40vw, 390px);
+    width: clamp(200px, 390px, 100vw);
     display: block;
 }
 
