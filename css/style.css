@@ -142,6 +142,15 @@ header {
 .product-card {
     border: #DCB8CE 1px solid;
     border-radius: 20px;
+    width: min-content;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card .product-img {
+    height: auto;
+    width: clamp(200px, 40vw, 390px);
+    display: block;
 }
 
 .product-chip {
@@ -154,14 +163,29 @@ header {
     display: inline-block;
     border: 1px solid black;
     position: absolute;    
+    top: 12px;         
+    left: 12px;    
+    z-index: 1;
+}
+
+.h1-and-bellow {
+    display: flex;
+    flex-direction: column;
+}
+
+.bellow-h1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
 }
 
 .product-favorite {
     position: absolute;
-}
-
-.product-favorite {
+    top: 0;
+    right: 0;
+    z-index: 1;
     padding: 15px;
+    width: 16%;
     border-radius: 0px 20px;
     background-color: rgba(255, 255, 255, 0.8);
 }
@@ -178,15 +202,19 @@ header {
 }
 
 .product-card-body {
-    padding: 40px 20px;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
 }
 
-.product-card-body > h1 {
+.h1-and-bellow > h1 {
     font-size: 28px;
     font-family: 'Mulish', sans-serif;
     line-height: 120%;
     color: #513E3E;
     font-weight: 400;
+    margin-bottom: 15px;
 }
 
 .product-in-stock {
@@ -205,8 +233,8 @@ header {
 
 .prices {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
+    gap: clamp(12px, 5vw, 54px);
     align-content: start;
     align-items: end;
 }
@@ -219,6 +247,8 @@ header {
 .price-in-bulk > img {
     display: inline-block;
     height: 16px;
+    position: relative;
+    top: -8px;
 }
 
 .price-in-bulk > .price {
@@ -246,7 +276,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: clamp(4px, 28px, 28px)
+    flex: 1;
 }
 
 .product-card-amount > p {
@@ -267,10 +297,9 @@ header {
     display: flex;
     align-items: center;
     align-content: center;
-    justify-content: space-between;
-    gap: 22px;
+    gap: clamp(8px, 22px, 10%);
     flex-wrap: wrap;
-    width: 100%;;
+    width: 100%;
 }
 
 footer {
@@ -461,4 +490,8 @@ footer {
 
 .mulish {
     font-family: 'Mulish', sans-serif;
+}
+
+.no-wrap {
+    white-space: nowrap;
 }
