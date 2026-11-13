@@ -52,4 +52,16 @@
         console.log(maxPrice.value)
         onMaxChange(event.target.valueAsNumber);
     });
-})()
+})();
+
+(function () {
+    const items = document.querySelectorAll('.carousel-items li');
+    const mainImage = document.querySelector('.img-carousel>img');
+
+    items.forEach((element) => element.addEventListener('click', (event) => {
+        const img = element.querySelector('img')
+        mainImage.src = img.src;
+        items.forEach((e) => e.classList.remove('selected'));
+        element.classList.add('selected');
+    }));
+})();
