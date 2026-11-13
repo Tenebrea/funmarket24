@@ -56,6 +56,62 @@ header, section, footer {
     margin: 0 auto;
 }
 
+table {
+    border: 1px solid #DCB8CE;
+    border-radius: 20px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 18px;
+    color: #513E3E;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+td {
+    width: 50%;
+    padding: 20px 30px;
+    border-bottom: 1px solid #DCB8CE;
+}
+
+td:first-child {
+    border-right: 1px solid #DCB8CE;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.img-carousel img {
+    border-radius: 20px;
+}
+
+.carousel-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+} 
+
+.carousel-items li {
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.carousel-items img {
+    width: 80%;
+    height: auto;
+    opacity: 0.8;
+}
+
+.carousel-items li.selected img {
+    width: 100%;
+    opacity: 1;
+}
+
 section.main {
     padding-bottom: 120px;
 }
@@ -142,6 +198,17 @@ section.main {
     border-radius: 30px;
     color: white;
     border-width: 0;
+}
+
+.outlined-btn {
+    background-color: transparent;
+    border: #EB6279 1px solid;
+    color: #EB6279;
+    font-size: 24px;
+    font-family: 'Bellota', sans-serif;
+    font-weight: 700;
+    padding: 15px 32px;
+    border-radius: 30px;
 }
 
 .site-path {
@@ -685,7 +752,13 @@ section.main {
     width: 100%;
     height: auto;
     border-radius: 20px;
-    
+}
+
+.stats h1 {
+    font-family: 'Bellota', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #513E3E;
 }
 
 footer {
