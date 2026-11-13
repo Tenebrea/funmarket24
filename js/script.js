@@ -65,3 +65,36 @@
         element.classList.add('selected');
     }));
 })();
+
+(function () {
+    const items = document.querySelectorAll('.product-favorite');
+    items.forEach((element) => element.addEventListener('click', (event) => {
+        element.toggle = !element.toggle;
+        if (element.toggle) {
+            element.src = 'images/icons/favorite_full.png';
+            element.alt = 'Товар в избранном';
+        } else {
+            element.src = 'images/icons/favorite_empty.png';
+            element.alt = 'Товар не в избранном';
+        }
+    }));
+})();
+
+(function () {
+    const items = document.querySelectorAll('.product-card-amount');
+    items.forEach((element) => {
+        const plus = element.querySelector('.plus');
+        const minus = element.querySelector('.minus');
+        const counter = element.querySelector('p');
+
+        plus.addEventListener('click', (event) => {
+            const number = Number(counter.textContent);
+            counter.textContent = number + 1;
+        });
+
+        minus.addEventListener('click', (event) => {
+            const number = Number(counter.textContent);
+            counter.textContent = number - 1;
+        });
+    })
+})();
