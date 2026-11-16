@@ -134,7 +134,7 @@
                 </form>
             </div>
             <!-- Карта товара -->
-            <div class="product-cards">
+            <div class="product-cards grid">
                 <div class="name-plate">
                     <div>
                         <h1>Латексные шары</h1>
@@ -148,23 +148,23 @@
                         <img src="images/icons/sort_arrow_down.png" alt="Сортировка списка">
                     </div>
                     <div class="layout">
-                        <div>
-                            <input type="radio" name="layout" id="grid">
+                        <div id="grid">
                             <label for="grid">
                                 <img src="images/icons/grid.png" alt="Разметка сеткой">
                             </label>
+                            <input id="grid" type="radio" name="layout" checked="true">
                         </div>
-                        <div>
-                            <input type="radio" name="layout" id="list_with_images">
+                        <div id="list_with_images">
                             <label for="list_with_images">
                                 <img src="images/icons/list_with_images.png" alt="Разметка списком с картинками">
                             </label>
+                            <input id="list_with_images" type="radio" name="layout">
                         </div>
-                        <div>
-                            <input type="radio" name="layout" id="list">
+                        <div id="list">
                             <label for="list">
                                 <img src="images/icons/list.png" alt="Разметка списком">
                             </label>
+                            <input id="list" type="radio" name="layout">
                         </div>
                     </div>
                 </div>

@@ -98,3 +98,19 @@
         });
     })
 })();
+
+(function () {
+    const layouts = document.querySelectorAll('.layout div');
+    const cards = document.querySelector('.product-cards');
+    layouts.forEach((element) => {
+        element.querySelector('input').addEventListener('change', function (event) {
+            if (this.checked) {
+                cards.classList.remove('grid');
+                cards.classList.remove('list_with_images');
+                cards.classList.remove('list');
+
+                cards.classList.add(this.id);
+            }
+        });
+    });
+})();
