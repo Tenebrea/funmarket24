@@ -587,18 +587,115 @@ section.main {
     overflow: hidden;
 }
 
-.product-card .product-img {
+.grid .product-card .product-img {
     height: auto;
     width: clamp(200px, 390px, 100vw);
     display: block;
 }
 
-.product-card-body {
+.grid .product-card-body {
     padding: 20px 40px;
     display: flex;
     flex-direction: column;
     gap: 23px;
 }
+
+.grid .product-card-bottom {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: clamp(8px, 22px, 10%);
+    flex-wrap: row wrap;
+    width: 100%;
+}
+
+.card-specs {
+    display: none;
+}
+
+.list .product-card {
+    width: 100%;
+}
+
+.list_with_images .card-specs {
+    display: block;
+}
+
+.list.product-cards {
+    flex-flow: column nowrap;
+    align-items: stretch;
+}
+
+.list .product-card, .list_with_images .product-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.list .product-card {
+    padding: 15px;
+}
+
+.list_with_images .product-card {
+    padding: 20px;
+}
+
+.list .product-card-body {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.list .h1-and-bellow {
+    max-width: 610px;
+}
+
+.list .bellow-h1 {
+    flex-direction: column-reverse;
+}
+
+.list .product-card-bottom-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.list .prices {
+    flex-wrap: nowrap;
+    margin-bottom: 13px;
+}
+
+.list .product-card-bottom {
+    gap: 20px;
+}
+
+.list .product-card .product-img {
+    width: clamp(70px, 210px, 20vw);
+    border-radius: 20px;
+    height: auto;
+    display: block;
+    margin-right: 40px;
+}
+
+.list .product-favorite {
+    position: absolute;
+    top: 45px;
+    left: 63%;
+    width: 20px;
+    padding: 0px;
+    background: transparent;
+    border-radius: 0px;
+}
+
+
+.list .product-card-bottom {
+    display: flex;
+
+}
+
+.list .product-card-body, .list_with_images .product-card-body-card {
+    display: flex;
+    flex-direction: row;
+}
+
 
 .product-card-amount {
     font-family: 'Mulish', sans-serif;
@@ -630,14 +727,7 @@ section.main {
     height: auto;
 }
 
-.product-card-bottom {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    gap: clamp(8px, 22px, 10%);
-    flex-wrap: row wrap;
-    width: 100%;
-}
+
 
 .product-chip {
     color: white;
