@@ -78,13 +78,9 @@
             </div>
             <div class="info-bottom">
                 <div class="product-card-amount">
-                    <div>
-                        <img class="minus" src="images/icons/minus.png" alt="Выложить из корзины 1 товар">
-                    </div>
-                    <p>12</p>
-                    <div>
-                        <img class="plus" src="images/icons/plus.png" alt="Выложить из корзины 1 товар">
-                    </div>
+                    <div class="minus"><img src="{% static 'images/icons/minus_not_active.png' %}" alt="Убрать 1 товар" data-full="{% static "images/icons/minus_active.png" %}" data-empty="{% static "images/icons/minus_not_active.png" %}"></div>
+                    <p>0</p>
+                    <div class="plus" data-stock="{{ product.in_stock }}"><img src="{% static 'images/icons/plus_active.png' %}" alt="Добавить 1 товар" data-full="{% static "images/icons/plus_active.png" %}" data-empty="{% static "images/icons/plus_not_active.png" %}"></div>
                 </div>
                 <div class="buttons">
                     <button class="primary-btn bellota px24 bold">В корзину</button>

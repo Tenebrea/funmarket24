@@ -141,59 +141,66 @@
 
                 {% for product in products %}
                 <div class="product-card">
-                    <p class="product-chip">Лидер продаж</p>
-                    <img class="product-favorite" src="images/icons/favorite_empty.png" alt="Товар не в избранном" toggle=false>
-                    <img class="product-img" src="images/product_placeholder.png" alt="Аквамарин (037), пастель, 12''/30 см. (12 шт.)">
+                    {% if product.chip %}
+                    <p class="product-chip"{% if product.chip.color %} style="background-color: {{ product.chip.color }}"{% endif %}>{{ product.chip.name }}</p>
+                    {% endif %}
+                    <img class="product-favorite" src="{% static "images/icons/favorite_empty.png" %}" alt="Товар не в избранном" toggle="false" data-empty="{% static "images/icons/favorite_empty.png" %}" data-full="{% static "images/icons/favorite_full.png" %}">
+                    <img class="product-img" src="{% static 'images/product_placeholder.png' %}" alt="{{ product.title }}">
                     <div class="product-card-body">
                         <div class="h1-and-bellow">
-                            <p class="product-property">Артикул: <span>C36050</span></p>
-                            <h1><a href="product.html">Аквамарин (037), пастель, 12''/30 см. <span class="no-wrap">(12 шт.)</span></a></h1>
+                            <p class="product-property">Артикул: <span>{{ product.artikul }}</span></p>
+                            <h1><a href="product">{{ product.title }} <span class="no-wrap">({{ product.in_stock }} шт.)</span></a></h1>
                             <div class="bellow-h1">
-                                <p class="product-property">Бренд: <span>Название бренда</span></p>
+                                <p class="product-property">Бренд: <span>{{ product.brand }}</span></p>
+                                {% if product.in_stock %}
                                 <div class="product-in-stock">
-                                    <img src="images/icons/positive_mark.png" alt="Товар есть в наличии">
+                                    <img src="{% static 'images/icons/positive_mark.png' %}" alt="Товар есть в наличии">
                                     <p>Есть в наличии</p>
                                 </div>
+                                {% else %}
+                                <div class="product-in-stock" style="color: #b23b3b">
+                                    <img src="{% static 'images/icons/negative_mark.png' %}" alt="Товара нет в наличии">
+                                    <p>Нет в наличии</p>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="product-card-bottom-container">
                             <div class="prices">
                                 <div class="price-in-bulk">
-                                    <p class="price">450₽/шт.</p>
-                                    <img src="images/icons/info.png" alt="Цена оптом">
+                                    <p class="price">{{ product.price_in_bulk }}₽/шт.</p>
+                                    <img src="{% static 'images/icons/info.png' %}" alt="Цена оптом">
                                     <p>Оптом</p>
                                 </div>
                                 <div class="price-by-one">
-                                    <p class="price">900₽/шт.</p>
+                                    <p class="price">{{ product.price }}₽/шт.</p>
                                     <p>Розница</p>
                                 </div>
                             </div>
                             <details class="card-specs" open>
                                 <summary>Характеристики</summary>
                                 <table>
-                                    <tr><td>Производитель</td><td>BelBal</td></tr>
-                                    <tr><td>Размер</td><td>14"</td></tr>
-                                    <tr><td>Оттенок</td><td>Матовый</td></tr>
-                                    <tr><td>Материал</td><td>Латекс</td></tr>
-                                    <tr><td>Тема</td><td>Другое</td></tr>
-                                    <tr><td>Форма</td><td>Круг</td></tr>
+                                    <tr><td>Производитель</td><td>{{ product.manufacturer }}</td></tr>
+                                    <tr><td>Размер</td><td>{{ product.size }}</td></tr>
+                                    <tr><td>Оттенок</td><td>{{ product.color }}</td></tr>
+                                    <tr><td>Материал</td><td>{{ product.material }}</td></tr>
+                                    <tr><td>Тема</td><td>{{ product.theme }}</td></tr>
+                                    <tr><td>Форма</td><td>{{ product.form }}</td></tr>
                                 </table>
                             </details>
                             <div class="product-card-bottom">
                                 <div class="product-card-amount">
-                                    <div class="minus" >
-                                        <img src="images/icons/minus.png" alt="Выложить из корзины 1 товар">
-                                    </div>
-                                    <p>12</p>
-                                    <div class="plus">
-                                        <img src="images/icons/plus.png" alt="Выложить из корзины 1 товар">
-                                    </div>
+                                    <div class="minus"><img src="{% static 'images/icons/minus_not_active.png' %}" alt="Убрать 1 товар" data-full="{% static "images/icons/minus_active.png" %}" data-empty="{% static "images/icons/minus_not_active.png" %}"></div>
+                                    <p>0</p>
+                                    <div class="plus" data-stock="{{ product.in_stock }}"><img src="{% static 'images/icons/plus_active.png' %}" alt="Добавить 1 товар" data-full="{% static "images/icons/plus_active.png" %}" data-empty="{% static "images/icons/plus_not_active.png" %}"></div>
                                 </div>
                                 <button class="primary-btn bellota px24 bold">В корзину</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% empty %}
+                <p class="catalog-empty">Товаров не найдено</p>
                 {% endfor %}
             </div>
         </div>

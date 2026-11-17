@@ -70,31 +70,54 @@
     const items = document.querySelectorAll('.product-favorite');
     items.forEach((element) => element.addEventListener('click', (event) => {
         element.toggle = !element.toggle;
-        if (element.toggle) {
-            element.src = 'images/icons/favorite_full.png';
-            element.alt = 'Товар в избранном';
-        } else {
-            element.src = 'images/icons/favorite_empty.png';
-            element.alt = 'Товар не в избранном';
-        }
+        element.src = element.toggle ? element.dataset.full : element.dataset.empty;
+        element.alt = element.toggle ? 'Товар в избранном' : 'Товар не в избранном';
     }));
 })();
 
 (function () {
+
+
     const items = document.querySelectorAll('.product-card-amount');
     items.forEach((element) => {
         const plus = element.querySelector('.plus');
         const minus = element.querySelector('.minus');
         const counter = element.querySelector('p');
 
+        function updateImages() {
+            const number = Number(counter.textContent);
+
+            const minusImg = minus.querySelector('img')
+            if (number === 0) {
+                minusImg.src = minusImg.dataset.empty
+            } else {
+                minusImg.src = minusImg.dataset.full
+            }
+            const plusImg = plus.querySelector('img')
+            if (number === Number(plus.dataset.stock)) {
+                plusImg.src = plusImg.dataset.empty
+            } else {
+                plusImg.src = plusImg.dataset.full
+            }
+        }
+
+        updateImages();
+
         plus.addEventListener('click', (event) => {
             const number = Number(counter.textContent);
+
+            if (number === Number(plus.dataset.stock)) return;
+
             counter.textContent = number + 1;
+            updateImages();
         });
 
         minus.addEventListener('click', (event) => {
             const number = Number(counter.textContent);
+            if (number === 0) return;
             counter.textContent = number - 1;
+
+            updateImages();
         });
     })
 })();
