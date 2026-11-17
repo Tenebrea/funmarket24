@@ -15,7 +15,7 @@
 <body>
     <header>
         <div class="container header-inner">
-            <img class="logo" src="images/logo/dark_logo.png">
+            <img class="logo" src="{% static "images/logo/dark_logo.png" %}">
             <ul class="nav-links bellota bold px18">
                 <li><a href="#">О нас</a></li>
                 <li><a href="#">Контакты</a></li>
@@ -23,18 +23,18 @@
             </ul>
             <div class="actions">
                 <a href="#" class="action-item favorite">
-                    <img id="favorite" src="images/icons/favorite.png" alt="Избранное">
+                    <img id="favorite" src="{% static "images/icons/favorite.png" %}" alt="Избранное">
                     <span class="px18 bellota">Избранное</span>
                 </a>
                 <a href="#" class="action-item cart-item">
                     <div class="icon-wrap">
-                        <img id="cart" src="images/icons/shopping_cart.png" alt="Корзина">
+                        <img id="cart" src="{% static "images/icons/shopping_cart.png" %}" alt="Корзина">
                         <span class="badge">99</span>
                     </div>
                     <span class="px18 bellota">5 000 руб.</span>
                 </a>
                 <a href="#" class="action-item">
-                    <img id="profile" src="images/icons/profile.png" alt="Личный кабинет">
+                    <img id="profile" src="{% static "images/icons/profile.png" %}" alt="Личный кабинет">
                     <span class="px18 bellota">Личный кабинет</span>
                 </a>
             </div>
@@ -50,16 +50,16 @@
                 <div id="search-section">
                     <div class="search">
                         <input class="search-input" type="text" placeholder="Поиск...">
-                        <img class="search-icon" src="images/icons/search.png" alt="Поиск">
+                        <img class="search-icon" src="{% static "images/icons/search.png" %}" alt="Поиск">
                     </div>
                     <div class="footer-doublecolumn">
-                        <img class="logo" src="images/logo/light_logo.png" alt="ФанМаркет">
+                        <img class="logo" src="{% static "images/logo/light_logo.png" %}" alt="ФанМаркет">
                         <div class="hug white">
                             <p>г. Красноярск, Мате Залки, 11</p>
                             <p>Пн-Сб: 10:00 - 20:00</p>
                             <div>
-                                <img class="footer-icon" src="images/icons/vk.png" alt="Наш ВК">
-                                <img id="rightmost" class="footer-icon" src="images/icons/instagram.png" alt="Наш Instagram">
+                                <img class="footer-icon" src="{% static "images/icons/vk.png" %}" alt="Наш ВК">
+                                <img id="rightmost" class="footer-icon" src="{% static "images/icons/instagram.png" %}" alt="Наш Instagram">
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                 <p class="bold">Политика конфиденциальности</p>
                 <div id="placestart">
                     <p>Сделано в</p>
-                    <img src="images/logo/placestart_logo.png" alt="Сделано в Placestart">
+                    <img src="{% static "images/logo/placestart_logo.png" %}" alt="Сделано в Placestart">
                 </div>
             </div>
         </div>

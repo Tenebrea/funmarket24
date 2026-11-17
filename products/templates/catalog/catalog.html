@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% load static %}
+
 {% block title %}
 ФанМаркет
 {% endblock title %}
@@ -19,7 +21,7 @@
     <section class="site-path">
         <div class="container">
             <a href="#">Главная</a>
-            <img src="images/icons/arrow.png" alt="">
+            <img src="{% static "images/icons/arrow.png" %}" alt="">
             <a href="#">Каталог</a>
         </div>
     </section>
@@ -113,24 +115,24 @@
                 <div class="sort-row">
                     <div class="sort">
                         <p>Сортировать по: <a href="#">Цене, сначала не дорогие</a></p>
-                        <img src="images/icons/sort_arrow_down.png" alt="Сортировка списка">
+                        <img src="{% static "images/icons/sort_arrow_down.png" %}" alt="Сортировка списка">
                     </div>
                     <div class="layout">
                         <div id="grid">
                             <label for="grid">
-                                <img src="images/icons/grid.png" alt="Разметка сеткой">
+                                <img src="{% static "images/icons/grid.png" %}" alt="Разметка сеткой">
                             </label>
                             <input id="grid" type="radio" name="layout" checked="true">
                         </div>
                         <div id="list_with_images">
                             <label for="list_with_images">
-                                <img src="images/icons/list_with_images.png" alt="Разметка списком с картинками">
+                                <img src="{% static "images/icons/list_with_images.png" %}" alt="Разметка списком с картинками">
                             </label>
                             <input id="list_with_images" type="radio" name="layout">
                         </div>
                         <div id="list">
                             <label for="list">
-                                <img src="images/icons/list.png" alt="Разметка списком">
+                                <img src="{% static "images/icons/list.png" %}" alt="Разметка списком">
                             </label>
                             <input id="list" type="radio" name="layout">
                         </div>
@@ -193,7 +195,6 @@
                     </div>
                 </div>
                 {% endfor %}
-
             </div>
         </div>
     </section>
@@ -202,10 +203,10 @@
             <div>
                 <h1>CEO-блок</h1>
                 <p>В одном из вагонов третьего класса, с рассвета, очутились друг против друга, у самого окна, два пассажира — оба люди молодые, оба почти налегке, оба не щегольски одетые, оба с довольно замечательными физиономиями и оба пожелавшие, наконец, войти друг с другом в разговор. Если б они оба знали один про другого, чем они особенно в эту минуту замечательны, </p>
-                <img src="images/ceo_img.png" alt="">
+                <img src="{% static "images/ceo_img.png" %}" alt="">
             </div>
             <div>
-                <img src="images/ceo_img.png" alt="">
+                <img src="{% static "images/ceo_img.png" %}" alt="">
                 <p>В одном из вагонов третьего класса, с рассвета, очутились друг против друга, у самого окна, два пассажира — оба люди молодые, оба почти налегке, оба не щегольски одетые, оба с довольно замечательными физиономиями и оба пожелавшие, наконец, войти друг с другом в разговор. Если б они оба знали один про другого, чем они особенно в эту минуту замечательны, то, конечно, подивились бы, что случай так странно посадил их друг против друга в третьеклассном вагоне петербургско-варшавского поезда.</p>
             </div>
         </div>
