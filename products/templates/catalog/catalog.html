@@ -1,42 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ФанМаркет</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js" defer></script>
-</head>
-<body>
-    <header>
-        <div class="container header-inner">
-            <img class="logo" src="images/logo/dark_logo.png">
-            <ul class="nav-links bellota bold px18">
-                <li><a href="#">О нас</a></li>
-                <li><a href="#">Контакты</a></li>
-                <li><a href="#">Для клиентов</a></li>
-            </ul>
-            <div class="actions">
-                <a href="#" class="action-item favorite">
-                    <img id="favorite" src="images/icons/favorite.png" alt="Избранное">
-                    <span class="px18 bellota">Избранное</span>
-                </a>
-                <a href="#" class="action-item cart-item">
-                    <div class="icon-wrap">
-                        <img id="cart" src="images/icons/shopping_cart.png" alt="Корзина">
-                        <span class="badge">99</span>
-                    </div>
-                    <span class="px18 bellota">5 000 руб.</span>
-                </a>
-                <a href="#" class="action-item">
-                    <img id="profile" src="images/icons/profile.png" alt="Личный кабинет">
-                    <span class="px18 bellota">Личный кабинет</span>
-                </a>
-            </div>
-            <a href="tel:+79029243230" class="bellota px18 bold phone">+7 902 924-32-30</a>
-            <button type="button" class="primary-btn px21 bellota" action="">Заказать звонок</button>
-        </div>       
-    </header>
+{% extends "layout.html" %}
+
+{% block title %}
+ФанМаркет
+{% endblock title %}
+
+{% block content %}
     <section class="top-bar">
         <div class="container">
             <ul>
@@ -169,6 +137,7 @@
                     </div>
                 </div>
 
+                {% for product in products %}
                 <div class="product-card">
                     <p class="product-chip">Лидер продаж</p>
                     <img class="product-favorite" src="images/icons/favorite_empty.png" alt="Товар не в избранном" toggle=false>
@@ -223,114 +192,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
-                    <p class="product-chip">Лидер продаж</p>
-                    <img class="product-favorite" src="images/icons/favorite_empty.png" alt="Товар не в избранном" toggle=false>
-                    <img class="product-img" src="images/product_placeholder.png" alt="Аквамарин (037), пастель, 12''/30 см. (12 шт.)">
-                    <div class="product-card-body">
-                        <div class="h1-and-bellow">
-                            <p class="product-property">Артикул: <span>C36050</span></p>
-                            <h1><a href="product.html">Аквамарин (037), пастель, 12''/30 см. <span class="no-wrap">(12 шт.)</span></a></h1>
-                            <div class="bellow-h1">
-                                <p class="product-property">Бренд: <span>Название бренда</span></p>
-                                <div class="product-in-stock">
-                                    <img src="images/icons/positive_mark.png" alt="Товар есть в наличии">
-                                    <p>Есть в наличии</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-card-bottom-container">
-                            <div class="prices">
-                                <div class="price-in-bulk">
-                                    <p class="price">450₽/шт.</p>
-                                    <img src="images/icons/info.png" alt="Цена оптом">
-                                    <p>Оптом</p>
-                                </div>
-                                <div class="price-by-one">
-                                    <p class="price">900₽/шт.</p>
-                                    <p>Розница</p>
-                                </div>
-                            </div>
-                            <details class="card-specs" open>
-                                <summary>Характеристики</summary>
-                                <table>
-                                    <tr><td>Производитель</td><td>BelBal</td></tr>
-                                    <tr><td>Размер</td><td>14"</td></tr>
-                                    <tr><td>Оттенок</td><td>Матовый</td></tr>
-                                    <tr><td>Материал</td><td>Латекс</td></tr>
-                                    <tr><td>Тема</td><td>Другое</td></tr>
-                                    <tr><td>Форма</td><td>Круг</td></tr>
-                                </table>
-                            </details>
-                            <div class="product-card-bottom">
-                                <div class="product-card-amount">
-                                    <div class="minus" >
-                                        <img src="images/icons/minus.png" alt="Выложить из корзины 1 товар">
-                                    </div>
-                                    <p>12</p>
-                                    <div class="plus">
-                                        <img src="images/icons/plus.png" alt="Выложить из корзины 1 товар">
-                                    </div>
-                                </div>
-                                <button class="primary-btn bellota px24 bold">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <p class="product-chip">Лидер продаж</p>
-                    <img class="product-favorite" src="images/icons/favorite_empty.png" alt="Товар не в избранном" toggle=false>
-                    <img class="product-img" src="images/product_placeholder.png" alt="Аквамарин (037), пастель, 12''/30 см. (12 шт.)">
-                    <div class="product-card-body">
-                        <div class="h1-and-bellow">
-                            <p class="product-property">Артикул: <span>C36050</span></p>
-                            <h1><a href="product.html">Аквамарин (037), пастель, 12''/30 см. <span class="no-wrap">(12 шт.)</span></a></h1>
-                            <div class="bellow-h1">
-                                <p class="product-property">Бренд: <span>Название бренда</span></p>
-                                <div class="product-in-stock">
-                                    <img src="images/icons/positive_mark.png" alt="Товар есть в наличии">
-                                    <p>Есть в наличии</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-card-bottom-container">
-                            <div class="prices">
-                                <div class="price-in-bulk">
-                                    <p class="price">450₽/шт.</p>
-                                    <img src="images/icons/info.png" alt="Цена оптом">
-                                    <p>Оптом</p>
-                                </div>
-                                <div class="price-by-one">
-                                    <p class="price">900₽/шт.</p>
-                                    <p>Розница</p>
-                                </div>
-                            </div>
-                            <details class="card-specs" open>
-                                <summary>Характеристики</summary>
-                                <table>
-                                    <tr><td>Производитель</td><td>BelBal</td></tr>
-                                    <tr><td>Размер</td><td>14"</td></tr>
-                                    <tr><td>Оттенок</td><td>Матовый</td></tr>
-                                    <tr><td>Материал</td><td>Латекс</td></tr>
-                                    <tr><td>Тема</td><td>Другое</td></tr>
-                                    <tr><td>Форма</td><td>Круг</td></tr>
-                                </table>
-                            </details>
-                            <div class="product-card-bottom">
-                                <div class="product-card-amount">
-                                    <div class="minus" >
-                                        <img src="images/icons/minus.png" alt="Выложить из корзины 1 товар">
-                                    </div>
-                                    <p>12</p>
-                                    <div class="plus">
-                                        <img src="images/icons/plus.png" alt="Выложить из корзины 1 товар">
-                                    </div>
-                                </div>
-                                <button class="primary-btn bellota px24 bold">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
+
             </div>
         </div>
     </section>
@@ -347,66 +210,5 @@
             </div>
         </div>
     </section>
-    <footer>
-        <div class="container footer-inner">
-            <div class="footer-main bellota px18">
-                <div id="search-section">
-                    <div class="search">
-                        <input class="search-input" type="text" placeholder="Поиск...">
-                        <img class="search-icon" src="images/icons/search.png" alt="Поиск">
-                    </div>
-                    <div class="footer-doublecolumn">
-                        <img class="logo" src="images/logo/light_logo.png" alt="ФанМаркет">
-                        <div class="hug white">
-                            <p>г. Красноярск, Мате Залки, 11</p>
-                            <p>Пн-Сб: 10:00 - 20:00</p>
-                            <div>
-                                <img class="footer-icon" src="images/icons/vk.png" alt="Наш ВК">
-                                <img id="rightmost" class="footer-icon" src="images/icons/instagram.png" alt="Наш Instagram">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="categories">
-                    <ul class="hug category">
-                        <li><h3>Каталог</h3></li>
-                        <li><a href="#">Гелиевые шары</a></li>
-                        <li><a href="#">Латексные шары</a></li>
-                        <li><a href="#">Фольгированные шары</a></li>
-                        <li><a href="#">Товары для аэродизайнеров</a></li>
-                        <li><a href="#">Декор и аренда</a></li>
-                        <li><a href="#">Товары для праздника</a></li>
-                    </ul>
-                    <ul class="hug white">
-                        <li><a href="#">Блог</a></li>
-                        <li><a href="#">О нас</a></li>
-                        <li><a href="#">Контакты</a></li>
-                    </ul>
-                    <ul class="hug category">
-                        <li><a href="#">Избранное</a></li>
-                        <li><a href="#">Корзина</a></li>
-                        <li><a href="#">Личный кабинет</a></li>
-                    </ul>
-                </div>
-                <div class="contact">
-                    <p class="white px18">funmarketdamaeva@yandex.ru</p>
-                    <p class="white bold px28">+7 902 924-32-30</p>
-                    <button class="primary-btn white">Заказать звонок</button>
-                </div>
-            </div>
-        </div>       
-    </footer>
-    <footer class="secondary">
-        <div class="container">
-            <div class="footer-secondary mulish white px18">
-                <p class="light">Все права защищены © 2023 ФанМаркет</p>
-                <p class="bold">Политика конфиденциальности</p>
-                <div id="placestart">
-                    <p>Сделано в</p>
-                    <img src="images/logo/placestart_logo.png" alt="Сделано в Placestart">
-                </div>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+{% endblock content %}
+    
