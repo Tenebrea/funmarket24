@@ -11,11 +11,13 @@
         <div class="container">
             <div class="top-bar">
                 <ul>
-                    <li><a href="#">Готовые наборы</a></li>
-                    <li><a href="#">Латексные шары</a></li>
-                    <li><a href="#">Фольгированные шары</a></li>
-                    <li><a href="#">Товары для аэродизайнеров</a></li>
-                    <li><a href="#">Товары для праздника</a></li>
+                    {% for categ in categories %}
+                        {% if categ == category %}
+                        <li class="choosen"><a href="{% url 'products:catalog' slug=categ.slug %}">{{ categ.name }}</a></li>
+                        {% else %}
+                        <li><a href="{% url 'products:catalog' slug=categ.slug %}">{{ categ.name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -111,7 +113,7 @@
                 <div class="product-cards grid">
                     <div class="name-plate">
                         <div>
-                            <h1>Латексные шары</h1>
+                            <h1>{{ category.name }}</h1>
                             <p>В одном из вагонов третьего класса, с рассвета, очутились друг против друга, у самого окна, два пассажира</p>
                         </div>
                     </div>
@@ -153,7 +155,7 @@
                         <div class="product-card-body">
                             <div class="h1-and-bellow">
                                 <p class="product-property">Артикул: <span>{{ product.artikul }}</span></p>
-                                <h1><a href="product">{{ product.title }} <span class="no-wrap">({{ product.in_stock }} шт.)</span></a></h1>
+                                <h1><a href="{% url 'products:product' id=product.id slug=category.slug %}">{{ product.title }} <span class="no-wrap">({{ product.in_stock }} шт.)</span></a></h1>
                                 <div class="bellow-h1">
                                     <p class="product-property">Бренд: <span>{{ product.brand }}</span></p>
                                     {% if product.in_stock > 0 %}

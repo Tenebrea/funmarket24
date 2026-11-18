@@ -3,19 +3,23 @@
 {% load static %}
 
 {% block title %}
-{{ post.title }}
+{{ product.title }}
 {% endblock title %}
 
 {% block content %}
-<section class="top-bar">
+<section>
     <div class="container">
-        <ul>
-            <li><a href="#" class="bellota bold px24">Готовые наборы</a></li>
-            <li><a href="#" class="bellota bold px24">Латексные шары</a></li>
-            <li><a href="#" class="bellota bold px24">Фольгированные шары</a></li>
-            <li><a href="#" class="bellota bold px24">Товары для аэродизайнеров</a></li>
-            <li><a href="#" class="bellota bold px24">Товары для праздника</a></li>
-        </ul>
+        <div class="top-bar">
+            <ul>
+                {% for categ in categories %}
+                    {% if categ == category %}
+                    <li class="choosen"><a href="{% url 'products:catalog' slug=categ.slug %}">{{ categ.name }}</a></li>
+                    {% else %}
+                    <li><a href="{% url 'products:catalog' slug=categ.slug %}">{{ categ.name }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </section>
 <section>
@@ -29,93 +33,95 @@
     </div>
 </section>
 <section class="main">
-    <div class="container product">
-        <img class="product-favorite" src="images/icons/favorite_empty.png" alt="Добавить в избранное" toggle=false>
-        <div class="img-carousel">
-            <img src="images/baloons.png" alt="">
-            <ul class="carousel-items">
-                <li class="selected">
-                    <img src="images/baloons.png" alt="">
-                </li>
-                <li>
-                    <img src="images/baloons.png" alt="">
-                </li>
-                <li>
-                    <img src="images/baloons.png" alt="">
-                </li>
-                <li>
-                    <img src="images/baloons.png" alt="">
-                </li>
-                <li>
-                    <img src="images/baloons.png" alt="">
-                </li>
-            </ul>
-        </div>
-        <div class="product-info">
-            <div class="h1-and-bellow">
-                <p class="product-property">Артикул: <span>C36050</span></p>
-                <h1>Аквамарин (037), пастель, 12''/30 см. <span class="no-wrap">(12 шт.)</span></h1>
-                <div class="bellow-h1">
-                    <div class="product-in-stock">
-                        <img src="images/icons/positive_mark.png" alt="Товар есть в наличии">
-                        <p>Есть в наличии</p>
+    <div class="container">
+        <div class="product">
+            <img class="product-favorite" src="images/icons/favorite_empty.png" alt="Добавить в избранное" toggle=false>
+            <div class="img-carousel">
+                <img src="images/baloons.png" alt="">
+                <ul class="carousel-items">
+                    <li class="selected">
+                        <img src="images/baloons.png" alt="">
+                    </li>
+                    <li>
+                        <img src="images/baloons.png" alt="">
+                    </li>
+                    <li>
+                        <img src="images/baloons.png" alt="">
+                    </li>
+                    <li>
+                        <img src="images/baloons.png" alt="">
+                    </li>
+                    <li>
+                        <img src="images/baloons.png" alt="">
+                    </li>
+                </ul>
+            </div>
+            <div class="product-info">
+                <div class="h1-and-bellow">
+                    <p class="product-property">Артикул: <span>C36050</span></p>
+                    <h1>Аквамарин (037), пастель, 12''/30 см. <span class="no-wrap">(12 шт.)</span></h1>
+                    <div class="bellow-h1">
+                        <div class="product-in-stock">
+                            <img src="images/icons/positive_mark.png" alt="Товар есть в наличии">
+                            <p>Есть в наличии</p>
+                        </div>
+                        <p class="product-property">Бренд: <span>Название бренда</span></p>
                     </div>
-                    <p class="product-property">Бренд: <span>Название бренда</span></p>
                 </div>
-            </div>
-            <div class="info-prices">
-                <div class="price-in-bulk">
-                    <p class="price">450₽/шт.</p>
-                    <img src="images/icons/info.png" alt="Цена оптом">
-                    <p>Оптом</p>
+                <div class="info-prices">
+                    <div class="price-in-bulk">
+                        <p class="price">450₽/шт.</p>
+                        <img src="images/icons/info.png" alt="Цена оптом">
+                        <p>Оптом</p>
+                    </div>
+                    <div class="price-by-one">
+                        <p class="price">900₽/шт.</p>
+                        <p>Розница</p>
+                    </div>
+                    <p class="product-property">Для заказа по оптовой цене не хватает: <span>1000₽</span></p>
                 </div>
-                <div class="price-by-one">
-                    <p class="price">900₽/шт.</p>
-                    <p>Розница</p>
+                <div class="info-bottom">
+                    <div class="product-card-amount">
+                        <div class="minus"><img src="{% static 'images/icons/minus_not_active.png' %}" alt="Убрать 1 товар" data-full="{% static "images/icons/minus_active.png" %}" data-empty="{% static "images/icons/minus_not_active.png" %}"></div>
+                        <p>0</p>
+                        <div class="plus" data-stock="{{ product.in_stock }}"><img src="{% static 'images/icons/plus_active.png' %}" alt="Добавить 1 товар" data-full="{% static "images/icons/plus_active.png" %}" data-empty="{% static "images/icons/plus_not_active.png" %}"></div>
+                    </div>
+                    <div class="buttons">
+                        <button class="primary-btn">В корзину</button>
+                        <button class="outlined-btn">Купить в 1 клик</button>
+                    </div>
                 </div>
-                <p class="product-property">Для заказа по оптовой цене не хватает: <span>1000₽</span></p>
-            </div>
-            <div class="info-bottom">
-                <div class="product-card-amount">
-                    <div class="minus"><img src="{% static 'images/icons/minus_not_active.png' %}" alt="Убрать 1 товар" data-full="{% static "images/icons/minus_active.png" %}" data-empty="{% static "images/icons/minus_not_active.png" %}"></div>
-                    <p>0</p>
-                    <div class="plus" data-stock="{{ product.in_stock }}"><img src="{% static 'images/icons/plus_active.png' %}" alt="Добавить 1 товар" data-full="{% static "images/icons/plus_active.png" %}" data-empty="{% static "images/icons/plus_not_active.png" %}"></div>
+                <div class="stats">
+                    <h1>Характеристики</h1>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Производитель</td>
+                                <td>BelBal</td>
+                            </tr>
+                            <tr>
+                                <td>Размер</td>
+                                <td>14”</td>
+                            </tr>
+                            <tr>
+                                <td>Оттенок</td>
+                                <td>Матовый</td>
+                            </tr>
+                            <tr>
+                                <td>Материал</td>
+                                <td>Латекс</td>
+                            </tr>
+                            <tr>
+                                <td>Тема</td>
+                                <td>Другое</td>
+                            </tr>
+                            <tr>
+                                <td>Форма</td>
+                                <td>Круг</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="buttons">
-                    <button class="primary-btn">В корзину</button>
-                    <button class="outlined-btn">Купить в 1 клик</button>
-                </div>
-            </div>
-            <div class="stats">
-                <h1>Характеристики</h1>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Производитель</td>
-                            <td>BelBal</td>
-                        </tr>
-                        <tr>
-                            <td>Размер</td>
-                            <td>14”</td>
-                        </tr>
-                        <tr>
-                            <td>Оттенок</td>
-                            <td>Матовый</td>
-                        </tr>
-                        <tr>
-                            <td>Материал</td>
-                            <td>Латекс</td>
-                        </tr>
-                        <tr>
-                            <td>Тема</td>
-                            <td>Другое</td>
-                        </tr>
-                        <tr>
-                            <td>Форма</td>
-                            <td>Круг</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

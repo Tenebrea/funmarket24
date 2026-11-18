@@ -735,6 +735,11 @@ section.main {
     border-radius: 0px;
 }
 
+.product {
+    display: flex;
+    flex-flow: row wrap;
+}
+
 
 .list .product-card-bottom {
     display: flex;
