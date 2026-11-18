@@ -10,6 +10,6 @@ def catalog(request, slug):
 
 def product(request, id, slug):
     category = get_object_or_404(Category, slug=slug)
-    product = get_object_or_404(Product, id=id)
+    product = get_object_or_404(Product, id=id, category=category)
     
     return render(request, 'catalog/product.html', {'product': product, 'category': category, 'categories': Category.objects.all()})

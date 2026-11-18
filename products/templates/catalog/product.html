@@ -27,55 +27,50 @@
         <div class="site-path">
             <a href="#">Главная</a>
             <a href="#">Каталог</a>
-            <a href="#">Латексные товары</a>
-            <a href="#">Наименование товара</a>
+            <a href="{% url 'products:catalog' slug=category.slug %}">{{ category.name }}</a>
+            <a href="#">{{ product.title }}</a>
         </div>
     </div>
 </section>
 <section class="main">
     <div class="container">
         <div class="product">
-            <img class="product-favorite" src="images/icons/favorite_empty.png" alt="Добавить в избранное" toggle=false>
+            <img class="product-favorite" src="{% static 'images/icons/favorite_empty.png' %}" alt="Товар не в избранном" toggle="false" data-empty="{% static 'images/icons/favorite_empty.png' %}" data-full="{% static 'images/icons/favorite_full.png' %}">
             <div class="img-carousel">
-                <img src="images/baloons.png" alt="">
+                <img src="{% static 'images/product_placeholder.png' %}" alt="{{ product.title }}">
                 <ul class="carousel-items">
                     <li class="selected">
-                        <img src="images/baloons.png" alt="">
-                    </li>
-                    <li>
-                        <img src="images/baloons.png" alt="">
-                    </li>
-                    <li>
-                        <img src="images/baloons.png" alt="">
-                    </li>
-                    <li>
-                        <img src="images/baloons.png" alt="">
-                    </li>
-                    <li>
-                        <img src="images/baloons.png" alt="">
+                        <img src="{% static 'images/product_placeholder.png' %}" alt="{{ product.title }}">
                     </li>
                 </ul>
             </div>
             <div class="product-info">
                 <div class="h1-and-bellow">
-                    <p class="product-property">Артикул: <span>C36050</span></p>
-                    <h1>Аквамарин (037), пастель, 12''/30 см. <span class="no-wrap">(12 шт.)</span></h1>
+                    <p class="product-property">Артикул: <span>{{ product.artikul }}</span></p>
+                    <h1>{{ product.title }} <span class="no-wrap">({{ product.in_stock }} шт.)</span></h1>
                     <div class="bellow-h1">
+                        {% if product.in_stock > 0 %}
                         <div class="product-in-stock">
-                            <img src="images/icons/positive_mark.png" alt="Товар есть в наличии">
+                            <img src="{% static 'images/icons/positive_mark.png' %}" alt="Товар есть в наличии">
                             <p>Есть в наличии</p>
                         </div>
-                        <p class="product-property">Бренд: <span>Название бренда</span></p>
+                        {% else %}
+                        <div class="product-in-stock" style="color: #b23b3b">
+                            <img src="{% static 'images/icons/negative_mark.png' %}" alt="Товара нет в наличии">
+                            <p>Нет в наличии</p>
+                        </div>
+                        {% endif %}
+                        <p class="product-property">Бренд: <span>{{ product.brand }}</span></p>
                     </div>
                 </div>
                 <div class="info-prices">
                     <div class="price-in-bulk">
-                        <p class="price">450₽/шт.</p>
-                        <img src="images/icons/info.png" alt="Цена оптом">
+                        <p class="price">{{ product.price_in_bulk }}₽/шт.</p>
+                        <img src="{% static 'images/icons/info.png' %}" alt="Цена оптом">
                         <p>Оптом</p>
                     </div>
                     <div class="price-by-one">
-                        <p class="price">900₽/шт.</p>
+                        <p class="price">{{ product.price }}₽/шт.</p>
                         <p>Розница</p>
                     </div>
                     <p class="product-property">Для заказа по оптовой цене не хватает: <span>1000₽</span></p>
@@ -97,27 +92,27 @@
                         <tbody>
                             <tr>
                                 <td>Производитель</td>
-                                <td>BelBal</td>
+                                <td>{{ product.manufacturer }}</td>
                             </tr>
                             <tr>
                                 <td>Размер</td>
-                                <td>14”</td>
+                                <td>{{ product.size }}</td>
                             </tr>
                             <tr>
                                 <td>Оттенок</td>
-                                <td>Матовый</td>
+                                <td>{{ product.color }}</td>
                             </tr>
                             <tr>
                                 <td>Материал</td>
-                                <td>Латекс</td>
+                                <td>{{ product.material }}</td>
                             </tr>
                             <tr>
                                 <td>Тема</td>
-                                <td>Другое</td>
+                                <td>{{ product.theme }}</td>
                             </tr>
                             <tr>
                                 <td>Форма</td>
-                                <td>Круг</td>
+                                <td>{{ product.form }}</td>
                             </tr>
                         </tbody>
                     </table>
