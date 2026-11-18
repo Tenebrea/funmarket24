@@ -9,6 +9,7 @@ class Chip(models.Model):
         return self.name
     
 class Product(models.Model):
+    id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=100)
     artikul = models.CharField(max_length=6)
     brand = models.CharField(max_length=100)
