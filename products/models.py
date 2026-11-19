@@ -1,4 +1,7 @@
 from django.db import models
+from filer.fields.image import FilerImageField
+
+from core.settings import MEDIA_ROOT
 
 # Create your models here.
 class Chip(models.Model):
@@ -31,6 +34,12 @@ class Product(models.Model):
     form = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default=None)
     chip = models.ForeignKey(Chip, on_delete=models.SET_DEFAULT, default=None, null=True, blank=True)
+    thumbnail_img = models.ImageField(upload_to=MEDIA_ROOT, default=None, null=True)
     
     def __str__(self):
         return self.title
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    image = FilerImageField(null=True, related_name="product_images", on_delete=models.CASCADE)
