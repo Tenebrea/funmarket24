@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% load static %}
+{% load static query_params %}
 
 {% block title %}
 ФанМаркет
@@ -13,9 +13,9 @@
                 <ul>
                     {% for categ in categories %}
                         {% if categ == category %}
-                        <li class="choosen"><a href="{% url 'products:catalog' slug=categ.slug %}">{{ categ.name }}</a></li>
+                        <li class="choosen"><a href="{% url 'products:catalog' slug=categ.slug %}{% url_with %}">{{ categ.name }}</a></li>
                         {% else %}
-                        <li><a href="{% url 'products:catalog' slug=categ.slug %}">{{ categ.name }}</a></li>
+                        <li><a href="{% url 'products:catalog' slug=categ.slug %}{% url_with %}">{{ categ.name }}</a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -34,7 +34,8 @@
         <div class="container">
             <div class="products-catalog">
                 <div class="catalog-filter">
-                    <form class="filters" id="filters" method="get">
+                    <form class="filters" id="filters" method="get" action="{% url 'products:catalog' slug=category.slug %}">
+                        <input type="hidden" name="sort" value="{{ current_sort }}">
                         <h2 class="filter-title">Каталог</h2>
                         <div class="categories-nav">
                             <details class="acc">
@@ -66,46 +67,64 @@
                             </details>
                         </div>
                         <h2 class="filter-title">Розничная цена</h2>
-                        <div class="range" data-max="5000">
+                        <div class="range" data-min="{{ price_lo }}" data-max="{{ price_hi }}">
                             <div class="range-track"><div class="range-fill"></div></div>
-                            <input type="range" id="rangeMin" min="990" max="5000" step="10" value="990" aria-label="Минимальная цена">
-                            <input type="range" id="rangeMax" min="990" max="5000" step="10" value="5000" aria-label="Максимальная цена">
+                            <input type="range" id="rangeMin" name="price_min" min="{{ price_lo }}" max="{{ price_hi }}" step="10" value="{{ request.GET.price_min|default:price_lo }}" aria-label="Минимальная цена">
+                            <input type="range" id="rangeMax" name="price_max" min="{{ price_lo }}" max="{{ price_hi }}" step="10" value="{{ request.GET.price_max|default:price_hi }}" aria-label="Максимальная цена">
                         </div>
                         <div class="price-inputs">
-                            <label class="price-field min">от <span>990</span>₽</label>
-                            <label class="price-field max">до <span>5000</span>₽</label>
+                            <label class="price-field min">от <span>{{ request.GET.price_min|default:price_lo }}</span>₽</label>
+                            <label class="price-field max">до <span>{{ request.GET.price_max|default:price_hi }}</span>₽</label>
                         </div>
                         <h2 class="filter-title">Производитель</h2>
                         <div class="options">
-                            <label class="radio"><input type="radio" name="brand" value="veselaya-zateya"><span>Веселая Затея</span></label>
-                            <label class="radio"><input type="radio" name="brand" value="sempertex"><span>Sempertex</span></label>
-                            <label class="radio"><input type="radio" name="brand" value="belbal" checked><span>BelBal</span></label>
-                            <label class="radio"><input type="radio" name="brand" value="koda"><span>Koda</span></label>
-                            <label class="radio"><input type="radio" name="brand" value="qualatex"><span>Qualatex</span></label>
-                            <label class="radio"><input type="radio" name="brand" value="anagram"><span>Anagram</span></label>
-                            <label class="radio"><input type="radio" name="brand" value="agura"><span>Agura</span></label>
-                            <label class="radio"><input type="radio" name="brand" value="flexmetal"><span>Flexmetal</span></label>
-                            <label class="radio"><input type="radio" name="brand" value="grabo"><span>Grabo</span></label>
-                            <label class="radio"><input type="radio" name="brand" value="everts"><span>Everts</span></label>
+                            <label class="radio"><input type="radio" name="manufacturer" value=""{% if not selected.manufacturer %} checked{% endif %}><span>Все</span></label>
+                            {% for manufacturer in manufacturers %}
+                            <label class="radio"><input type="radio" name="manufacturer" value="{{ manufacturer }}"{% if manufacturer == selected.manufacturer %} checked{% endif %}><span>{{ manufacturer }}</span></label>
+                            {% empty %}
+                            <p class="filter-empty">Нет вариантов</p>
+                            {% endfor %}
                         </div>
                         <details class="collapse">
                             <summary>Размер</summary>
                             <div class="options">
-                                <label class="check"><input type="checkbox" name="size" value="12"><span>12''/30 см</span></label>
-                                <label class="check"><input type="checkbox" name="size" value="5"><span>5''/13 см</span></label>
+                                {% for size in sizes %}
+                                <label class="check"><input type="checkbox" name="size" value="{{ size }}"{% if size in selected.size %} checked{% endif %}><span>{{ size }}</span></label>
+                                {% endfor %}
                             </div>
                         </details>
                         <details class="collapse">
                             <summary>Цвет</summary>
                             <div class="options">
-                                <label class="check"><input type="checkbox" name="color" value="red"><span>Красный</span></label>
-                                <label class="check"><input type="checkbox" name="color" value="blue"><span>Синий</span></label>
+                                {% for color in colors %}
+                                <label class="check"><input type="checkbox" name="color" value="{{ color }}"{% if color in selected.color %} checked{% endif %}><span>{{ color }}</span></label>
+                                {% endfor %}
                             </div>
                         </details>
-                        <details class="collapse"><summary>Оттенок</summary><div class="options"></div></details>
-                        <details class="collapse"><summary>Материал</summary><div class="options"></div></details>
-                        <details class="collapse"><summary>Тема</summary><div class="options"></div></details>
-                        <details class="collapse"><summary>Форма</summary><div class="options"></div></details>
+                        <details class="collapse">
+                            <summary>Материал</summary>
+                            <div class="options">
+                                {% for material in materials %}
+                                <label class="check"><input type="checkbox" name="material" value="{{ material }}"{% if material in selected.material %} checked{% endif %}><span>{{ material }}</span></label>
+                                {% endfor %}
+                            </div>
+                        </details>
+                        <details class="collapse">
+                            <summary>Тема</summary>
+                            <div class="options">
+                                {% for theme in themes %}
+                                <label class="check"><input type="checkbox" name="theme" value="{{ theme }}"{% if theme in selected.theme %} checked{% endif %}><span>{{ theme }}</span></label>
+                                {% endfor %}
+                            </div>
+                        </details>
+                        <details class="collapse">
+                            <summary>Форма</summary>
+                            <div class="options">
+                                {% for balloon_form in forms %}
+                                <label class="check"><input type="checkbox" name="form" value="{{ balloon_form }}"{% if balloon_form in selected.form %} checked{% endif %}><span>{{ balloon_form }}</span></label>
+                                {% endfor %}
+                            </div>
+                        </details>
                         <details class="collapse"><summary>Скидка</summary><div class="options"></div></details>
                     </form>
                 </div>
@@ -120,8 +139,18 @@
 
                     <div class="sort-row">
                         <div class="sort">
-                            <p>Сортировать по: <a href="#">Цене, сначала не дорогие</a></p>
-                            <img src="{% static "images/icons/sort_arrow_down.png" %}" alt="Сортировка списка">
+                            <p>Сортировать по:
+                                {% if current_sort == '-price' %}
+                                <a href="{% url_with sort='price' %}">Цене, сначала недорогие</a>
+                                {% elif current_sort == 'title' %}
+                                <a href="{% url_with sort='-title' %}">Названию, от А до Я</a>
+                                {% elif current_sort == '-title' %}
+                                <a href="{% url_with sort='title' %}">Названию, от Я до А</a>
+                                {% else %}
+                                <a href="{% url_with sort='-price' %}">Цене, сначала дорогие</a>
+                                {% endif %}
+                            </p>
+                            <a href="{% url_with sort='-price' %}"><img src="{% static "images/icons/sort_arrow_down.png" %}" alt="Сортировка списка"></a>
                         </div>
                         <div class="layout">
                             <div id="grid">
@@ -208,7 +237,7 @@
                         </div>
                     </div>
                     {% empty %}
-                    <p class="catalog-empty">Товаров не найдено</p>
+                    <p class="catalog-empty">Товаров не найдено{% if request.GET %} — <a href="{% url 'products:catalog' slug=category.slug %}">сбросить фильтры</a>{% endif %}</p>
                     {% endfor %}
                 </div>
             </div>

@@ -1,14 +1,20 @@
 (function () {
     const minPrice = document.getElementById('rangeMin');
     const maxPrice = document.getElementById('rangeMax');
+    const form = document.getElementById('filters');
 
     const labelMin = document.querySelector('.price-field.min span');
     const labelMax = document.querySelector('.price-field.max span');
-    const minGap = 100;
 
     const rangeFill = document.querySelector('.range-fill');
 
     if (!minPrice || !maxPrice) return
+
+    const rangeEl = minPrice.closest('.range');
+    const lowerBound = Number(rangeEl?.dataset.min ?? minPrice.min);
+    const upperBound = Number(rangeEl?.dataset.max ?? maxPrice.max);
+    const boundsSpan = upperBound - lowerBound || 1;
+    const minGap = Math.min(100, Math.round(boundsSpan / 10));
 
     function onMinChange(minValue) {
         const maxValue = maxPrice.valueAsNumber;
@@ -32,25 +38,32 @@
     }
 
     function updateLabels(maxValue, minValue) {
-        labelMax.textContent = maxValue;
-        labelMin.textContent = minValue;
+        if (labelMax) labelMax.textContent = maxValue;
+        if (labelMin) labelMin.textContent = minValue;
     }
 
     function updateSizes() {
-        rangeFill.style.setProperty('--min', `${(minPrice.valueAsNumber - 990) / (5000 - 990) * 100}%`);
-        rangeFill.style.setProperty('--max', `${(maxPrice.valueAsNumber - minPrice.valueAsNumber) / (5000 - 990) * 100}%`);
+        rangeFill.style.setProperty('--min', `${(minPrice.valueAsNumber - lowerBound) / boundsSpan * 100}%`);
+        rangeFill.style.setProperty('--max', `${(maxPrice.valueAsNumber - minPrice.valueAsNumber) / boundsSpan * 100}%`);
     }
 
     minPrice.addEventListener('input', (event) => {
-        console.log(minPrice.value)
-        console.log(maxPrice.value)
         onMinChange(event.target.valueAsNumber);
     });
 
     maxPrice.addEventListener('input', (event) => {
-        console.log(minPrice.value)
-        console.log(maxPrice.value)
         onMaxChange(event.target.valueAsNumber);
+    });
+
+    updateLabels(maxPrice.valueAsNumber, minPrice.valueAsNumber);
+    updateSizes();
+
+    // Filter form: submit as soon as the user changes any control.
+    if (!form) return;
+
+    form.addEventListener('change', (event) => {
+        if (!event.target.matches('input, select')) return;
+        form.requestSubmit();
     });
 })();
 
