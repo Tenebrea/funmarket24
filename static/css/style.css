@@ -533,21 +533,11 @@ section.main {
 
 .sort {
     font-family: 'Bellota', sans-serif;
-    font-size: 24;
+    font-size: 24px;
     color: #ADADAD;
     display: flex;
     gap: 20px;
     align-items: center;
-}
-
-.sort img {
-    height: 10px;
-    width: auto;
-}
-
-.sort a {
-    color: #FAA48E;
-    text-decoration: underline;
 }
 
 .layout {
@@ -605,6 +595,45 @@ section.main {
     gap: 20px 0px;
     justify-content: space-between;
     width: 100%;
+}
+
+.sort details {
+    display: inline-block;
+    color: #FAA48E;
+    text-decoration: underline;
+    position: relative;
+    z-index: 10;
+}
+
+.sort summary::after {
+    content: '';
+    display: inline-block;
+    background-image: url('../images/icons/sort_arrow_down.png');
+    height: 10px;
+    width: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.sort details[open] summary::after {
+    background-image: none;
+}
+
+.sort div {
+    display: flex;
+    width: max-content;
+    flex-direction: column;
+    position: absolute;
+    gap: 12px;
+    padding: 12px;
+    right: 0;
+    top: 30px;
+    background-color: white;
+    border-bottom: black 1px solid;
+    border-right: black 1px solid;
+    border-left: black 1px solid;
+
 }
 
 .product-card {

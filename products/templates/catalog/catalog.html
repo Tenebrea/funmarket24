@@ -125,7 +125,6 @@
                                 {% endfor %}
                             </div>
                         </details>
-                        <details class="collapse"><summary>Скидка</summary><div class="options"></div></details>
                     </form>
                 </div>
                 <!-- Карта товара -->
@@ -139,18 +138,37 @@
 
                     <div class="sort-row">
                         <div class="sort">
-                            <p>Сортировать по:
-                                {% if current_sort == '-price' %}
-                                <a href="{% url_with sort='price' %}">Цене, сначала недорогие</a>
-                                {% elif current_sort == 'title' %}
-                                <a href="{% url_with sort='-title' %}">Названию, от А до Я</a>
-                                {% elif current_sort == '-title' %}
-                                <a href="{% url_with sort='title' %}">Названию, от Я до А</a>
-                                {% else %}
-                                <a href="{% url_with sort='-price' %}">Цене, сначала дорогие</a>
-                                {% endif %}
-                            </p>
-                            <a href="{% url_with sort='-price' %}"><img src="{% static "images/icons/sort_arrow_down.png" %}" alt="Сортировка списка"></a>
+                            <span>Сортировать по:</span>
+                            <details>
+                                <summary>
+                                    {% if current_sort == '-price' %}
+                                    Цене, сначала недорогие
+                                    {% elif current_sort == 'title' %}
+                                    Названию, от А до Я
+                                    {% elif current_sort == '-title' %}
+                                    Названию, от Я до А
+                                    {% else %}
+                                    Цене, сначала дорогие
+                                    {% endif %}
+                                </summary>
+                                <div>
+                                    {% if current_sort != '-price' %}
+                                    <a href="{% url_with sort='-price' %}">Цене, сначала недорогие</a>
+                                    {% endif %}
+
+                                    {% if current_sort != 'title' %}
+                                    <a href="{% url_with sort='title' %}">Названию, от А до Я</a>
+                                    {% endif %}
+
+                                    {% if current_sort != '-title' %}
+                                    <a href="{% url_with sort='-title' %}">Названию, от Я до А</a>
+                                    {% endif %}
+
+                                    {% if current_sort != 'price' %}
+                                    <a href="{% url_with sort='price' %}">Цене, сначала дорогие</a>
+                                    {% endif %}
+                                </div>
+                            </details>
                         </div>
                         <div class="layout">
                             <div id="grid">

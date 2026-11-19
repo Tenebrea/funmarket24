@@ -58,7 +58,6 @@
     updateLabels(maxPrice.valueAsNumber, minPrice.valueAsNumber);
     updateSizes();
 
-    // Filter form: submit as soon as the user changes any control.
     if (!form) return;
 
     form.addEventListener('change', (event) => {
@@ -148,5 +147,17 @@
                 cards.classList.add(this.id);
             }
         });
+    });
+})();
+
+(function () {
+    const sorting = document.querySelector('.sort details');
+
+    sorting.addEventListener('mouseover', (event) => {
+        sorting.open = true;
+    });
+
+    sorting.addEventListener('mouseout', (event) => {
+        sorting.open = false;
     });
 })();

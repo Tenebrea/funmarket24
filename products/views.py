@@ -3,8 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from .models import Product, Category
 
 SORT_OPTIONS = {
-    'price': 'price',
-    '-price': '-price',
+    'price': '-price',
+    '-price': 'price',
     'title': 'title',
     '-title': '-title',
     'stock': '-in_stock',
