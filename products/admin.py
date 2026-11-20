@@ -5,4 +5,5 @@ from .models import *
 admin.site.register(Product)
 admin.site.register(Chip)
 admin.site.register(Category)
+admin.site.register(Subcategory)
 admin.site.register(ProductImage)

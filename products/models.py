@@ -1,5 +1,4 @@
 from django.db import models
-from filer.fields.image import FilerImageField
 
 from core.settings import MEDIA_ROOT
 
@@ -40,6 +39,11 @@ class Product(models.Model):
         return self.title
 
 
+class Subcategory(models.Model):
+    name = models.CharField()
+    slug = models.SlugField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None)
+
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image = FilerImageField(null=True, related_name="product_images", on_delete=models.CASCADE)
+    image = models.ImageField()
