@@ -266,18 +266,100 @@ section.main {
     width: auto;
 }
 
-.top-bar ul {
+.top-bar > ul {
     border: #CAB1B7 solid 1px;
     display: flex;
     flex: 1;
     justify-content: space-around;
-    padding-top: 22px;
-    padding-bottom: 22px;
+    align-items: center;
     border-radius: 999px;
     text-align: center;
     list-style: none;
     font-size: 24px;
     font-weight: 700;
+}
+
+.top-bar > ul > li {
+    position: relative;
+}
+
+.top-bar .dropdown {
+    position: relative;
+}
+
+.top-bar .dropdown > summary {
+    position: relative;
+    z-index: 31;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-family: 'Bellota', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #513E3E;
+    cursor: pointer;
+    list-style: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    z-index: 990;
+}
+
+.top-bar .dropdown > summary::-webkit-details-marker {
+    display: none;
+}
+
+.top-bar .dropdown > summary a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.top-bar .dropdown > summary:hover,
+.top-bar .dropdown[open] > summary {
+    background-color: #EB6279;
+    color: #FFFFFF;
+}
+
+.top-bar .dropdown > ul {
+    position: absolute;
+    font-size: 18px;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    border: #EB6279 solid 1px;
+    border-top: none;
+    gap: 30px;
+    width: 100%;
+    margin: 0;
+    margin-top: -30px;
+    padding: 36px 29px 31px;
+    list-style: none;
+    text-align: left;
+    background-color: #FFFFFF;
+    border-radius: 0 0 44px 44px;
+}
+
+.top-bar .dropdown > ul a {
+    display: block;
+    font-family: 'Bellota', sans-serif;
+    line-height: 1.28;
+    color: #3B3030;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.top-bar .dropdown > ul a:hover,
+.top-bar .dropdown > ul a.active {
+    color: #F0758A;
+}
+
+.top-bar > ul > li:last-child .dropdown > ul {
+    left: auto;
+    right: 0;
 }
 
 .top-bar li:hover, 

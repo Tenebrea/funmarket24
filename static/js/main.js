@@ -152,12 +152,28 @@
 
 (function () {
     const sorting = document.querySelector('.sort details');
+    const topBar = document.querySelectorAll('.top-bar .dropdown');
 
-    sorting.addEventListener('mouseover', (event) => {
-        sorting.open = true;
-    });
+    if (sorting) {
+        sorting.addEventListener('mouseenter', () => {
+            sorting.open = true;
+        });
 
-    sorting.addEventListener('mouseout', (event) => {
-        sorting.open = false;
+        sorting.addEventListener('mouseleave', () => {
+            sorting.open = false;
+        });
+    }
+
+    topBar.forEach((element) => {
+        element.addEventListener('mouseenter', () => {
+            topBar.forEach((other) => {
+                if (other !== element) other.open = false;
+            });
+            element.open = true;
+        });
+
+        element.addEventListener('mouseleave', () => {
+            element.open = false;
+        });
     });
 })();

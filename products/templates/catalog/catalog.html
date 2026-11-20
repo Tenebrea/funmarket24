@@ -12,11 +12,22 @@
             <div class="top-bar">
                 <ul>
                     {% for categ in categories %}
-                        {% if categ == category %}
-                        <li class="choosen"><a href="{% url 'products:catalog' slug=categ.slug %}{% url_with subcategory=None %}">{{ categ.name }}</a></li>
+                    <li{% if categ == category %} class="choosen"{% endif %}>
+                        {% if categ.subcategory_set.all %}
+                        <details class="dropdown">
+                            <summary><a href="{% url 'products:catalog' slug=categ.slug %}{% url_with subcategory=None %}">{{ categ.name }}</a></summary>
+                            <ul>
+                                {% for sub in categ.subcategory_set.all %}
+                                <li>
+                                    <a href="{% url 'products:catalog' slug=categ.slug %}{% url_with subcategory=sub.slug %}"{% if sub == subcategory %} class="active"{% endif %}>{{ sub.name }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </details>
                         {% else %}
-                        <li><a href="{% url 'products:catalog' slug=categ.slug %}{% url_with subcategory=None %}">{{ categ.name }}</a></li>
+                        <a class="top-bar-link" href="{% url 'products:catalog' slug=categ.slug %}{% url_with subcategory=None %}">{{ categ.name }}</a>
                         {% endif %}
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
