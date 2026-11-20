@@ -6,6 +6,9 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
 
+class SubcategoryInline(admin.TabularInline):
+    model = Subcategory
+    extra = 1
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -16,5 +19,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Chip)
-admin.site.register(Category)
-admin.site.register(Subcategory)
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    inlines = [SubcategoryInline]
