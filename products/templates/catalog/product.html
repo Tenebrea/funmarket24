@@ -28,6 +28,9 @@
             <a href="#">Главная</a>
             <a href="#">Каталог</a>
             <a href="{% url 'products:catalog' slug=category.slug %}">{{ category.name }}</a>
+            {% if product.subcategory %}
+            <a href="{% url 'products:catalog' slug=category.slug %}?subcategory={{ product.subcategory.slug }}">{{ product.subcategory.name }}</a>
+            {% endif %}
             <a href="#">{{ product.title }}</a>
         </div>
     </div>
@@ -37,12 +40,20 @@
         <div class="product">
             <img class="product-favorite" src="{% static 'images/icons/favorite_empty.png' %}" alt="Товар не в избранном" toggle="false" data-empty="{% static 'images/icons/favorite_empty.png' %}" data-full="{% static 'images/icons/favorite_full.png' %}">
             <div class="img-carousel">
-                <img src="{% static 'images/product_placeholder.png' %}" alt="{{ product.title }}">
+                {% with main_image=product.images.all.0 %}
+                <img src="{% if main_image %}{{ main_image.image.url }}{% elif product.thumbnail_img %}{{ product.thumbnail_img.url }}{% else %}{% static 'images/product_placeholder.png' %}{% endif %}" alt="{{ product.title }}">
                 <ul class="carousel-items">
-                    <li class="selected">
-                        <img src="{% static 'images/product_placeholder.png' %}" alt="{{ product.title }}">
+                    {% for img in product.images.all %}
+                    <li{% if forloop.first %} class="selected"{% endif %}>
+                        <img src="{{ img.image.url }}" alt="{{ product.title }}">
                     </li>
+                    {% empty %}
+                    <li class="selected">
+                        <img src="{% if product.thumbnail_img %}{{ product.thumbnail_img.url }}{% else %}{% static 'images/product_placeholder.png' %}{% endif %}" alt="{{ product.title }}">
+                    </li>
+                    {% endfor %}
                 </ul>
+                {% endwith %}
             </div>
             <div class="product-info">
                 <div class="h1-and-bellow">

@@ -112,7 +112,7 @@ tr:last-child td {
     align-items: center;
     justify-content: center;
     height: 100%;
-    width: 100%;
+    width: 150px;
     
 }
 
@@ -125,6 +125,7 @@ tr:last-child td {
 .carousel-items li.selected img {
     height: 100%;
     opacity: 1;
+    width: 100%;
 }
 
 section.main {
@@ -369,6 +370,27 @@ section.main {
 .acc a:hover {
     color: #FAA48E;
     opacity: 1;
+}
+
+.acc a.active {
+    color: #EB6279;
+    opacity: 1;
+}
+
+.categories-nav > a.acc-alone {
+    display: flex;
+    align-items: center;
+    font-family: 'Bellota', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 110%;
+    color: #513E3E;
+    padding: 10px 0;
+    transition: color 0.2s ease;
+}
+
+.categories-nav > a.acc-alone:hover {
+    color: #EB6279;
 }
 
 .filters {

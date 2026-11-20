@@ -13,9 +13,9 @@
                 <ul>
                     {% for categ in categories %}
                         {% if categ == category %}
-                        <li class="choosen"><a href="{% url 'products:catalog' slug=categ.slug %}{% url_with %}">{{ categ.name }}</a></li>
+                        <li class="choosen"><a href="{% url 'products:catalog' slug=categ.slug %}{% url_with subcategory=None %}">{{ categ.name }}</a></li>
                         {% else %}
-                        <li><a href="{% url 'products:catalog' slug=categ.slug %}{% url_with %}">{{ categ.name }}</a></li>
+                        <li><a href="{% url 'products:catalog' slug=categ.slug %}{% url_with subcategory=None %}">{{ categ.name }}</a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -38,33 +38,20 @@
                         <input type="hidden" name="sort" value="{{ current_sort }}">
                         <h2 class="filter-title">Каталог</h2>
                         <div class="categories-nav">
-                            <details class="acc">
-                                <summary>Готовые наборы</summary>
+                            {% for categ in categories %}
+                            {% if categ.subcategory_set.all %}
+                            <details class="acc"{% if categ == category %} open{% endif %}>
+                                <summary>{{ categ.name }}</summary>
                                 <div class="acc-body">
-                                    <a href="#">Наборы на день рождения</a>
-                                    <a href="#">Наборы на выписку</a>
+                                    {% for sub in categ.subcategory_set.all %}
+                                    <a href="{% url 'products:catalog' slug=categ.slug %}{% if categ == category %}{% url_with subcategory=sub.slug %}{% endif %}"{% if sub == subcategory %} class="active"{% endif %}>{{ sub.name }}</a>
+                                    {% endfor %}
                                 </div>
                             </details>
-                            <details class="acc" open>
-                                <summary>Латексные шары</summary>
-                                <div class="acc-body">
-                                    <a href="#" class="sub">Круглые без рисунка</a>
-                                    <a href="#">Круглые с рисунком</a>
-                                    <a href="#">Сердца</a>
-                                </div>
-                            </details>
-                            <details class="acc">
-                                <summary>Фольгированные шары</summary>
-                                <div class="acc-body"><a href="#">Фигуры</a></div>
-                            </details>
-                            <details class="acc">
-                                <summary>Товары для аэродизайнеров</summary>
-                                <div class="acc-body"><a href="#">Грузики</a></div>
-                            </details>
-                            <details class="acc">
-                                <summary>Товары для праздника</summary>
-                                <div class="acc-body"><a href="#">Свечи</a></div>
-                            </details>
+                            {% else %}
+                            <a class="acc-alone" href="{% url 'products:catalog' slug=categ.slug %}{% url_with subcategory=None %}">{{ categ.name }}</a>
+                            {% endif %}
+                            {% endfor %}
                         </div>
                         <h2 class="filter-title">Розничная цена</h2>
                         <div class="range" data-min="{{ price_lo }}" data-max="{{ price_hi }}">
@@ -195,7 +182,7 @@
                     {% for product in products %}
                     <div class="product-card">
                         <img class="product-favorite" src="{% static "images/icons/favorite_empty.png" %}" alt="Товар не в избранном" toggle="false" data-empty="{% static "images/icons/favorite_empty.png" %}" data-full="{% static "images/icons/favorite_full.png" %}">
-                        <img class="product-img" src="{% static 'images/product_placeholder.png' %}" alt="{{ product.title }}">
+                        <img class="product-img" src="{% if product.thumbnail_img %}{{ product.thumbnail_img.url }}{% else %}{% static 'images/product_placeholder.png' %}{% endif %}" alt="{{ product.title }}">
                         <div class="product-card-body">
                             <div class="h1-and-bellow">
                                 {% if product.chip %}
