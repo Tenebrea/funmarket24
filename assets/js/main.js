@@ -1,14 +1,20 @@
 (function () {
     const minPrice = document.getElementById('rangeMin');
     const maxPrice = document.getElementById('rangeMax');
+    const form = document.getElementById('filters');
 
     const labelMin = document.querySelector('.price-field.min span');
     const labelMax = document.querySelector('.price-field.max span');
-    const minGap = 100;
 
     const rangeFill = document.querySelector('.range-fill');
 
     if (!minPrice || !maxPrice) return
+
+    const rangeEl = minPrice.closest('.range');
+    const lowerBound = Number(rangeEl?.dataset.min ?? minPrice.min);
+    const upperBound = Number(rangeEl?.dataset.max ?? maxPrice.max);
+    const boundsSpan = upperBound - lowerBound || 1;
+    const minGap = Math.min(100, Math.round(boundsSpan / 10));
 
     function onMinChange(minValue) {
         const maxValue = maxPrice.valueAsNumber;
@@ -32,25 +38,31 @@
     }
 
     function updateLabels(maxValue, minValue) {
-        labelMax.textContent = maxValue;
-        labelMin.textContent = minValue;
+        if (labelMax) labelMax.textContent = maxValue;
+        if (labelMin) labelMin.textContent = minValue;
     }
 
     function updateSizes() {
-        rangeFill.style.setProperty('--min', `${(minPrice.valueAsNumber - 990) / (5000 - 990) * 100}%`);
-        rangeFill.style.setProperty('--max', `${(maxPrice.valueAsNumber - minPrice.valueAsNumber) / (5000 - 990) * 100}%`);
+        rangeFill.style.setProperty('--min', `${(minPrice.valueAsNumber - lowerBound) / boundsSpan * 100}%`);
+        rangeFill.style.setProperty('--max', `${(maxPrice.valueAsNumber - minPrice.valueAsNumber) / boundsSpan * 100}%`);
     }
 
     minPrice.addEventListener('input', (event) => {
-        console.log(minPrice.value)
-        console.log(maxPrice.value)
         onMinChange(event.target.valueAsNumber);
     });
 
     maxPrice.addEventListener('input', (event) => {
-        console.log(minPrice.value)
-        console.log(maxPrice.value)
         onMaxChange(event.target.valueAsNumber);
+    });
+
+    updateLabels(maxPrice.valueAsNumber, minPrice.valueAsNumber);
+    updateSizes();
+
+    if (!form) return;
+
+    form.addEventListener('change', (event) => {
+        if (!event.target.matches('input, select')) return;
+        form.requestSubmit();
     });
 })();
 
@@ -70,31 +82,54 @@
     const items = document.querySelectorAll('.product-favorite');
     items.forEach((element) => element.addEventListener('click', (event) => {
         element.toggle = !element.toggle;
-        if (element.toggle) {
-            element.src = 'images/icons/favorite_full.png';
-            element.alt = 'Товар в избранном';
-        } else {
-            element.src = 'images/icons/favorite_empty.png';
-            element.alt = 'Товар не в избранном';
-        }
+        element.src = element.toggle ? element.dataset.full : element.dataset.empty;
+        element.alt = element.toggle ? 'Товар в избранном' : 'Товар не в избранном';
     }));
 })();
 
 (function () {
+
+
     const items = document.querySelectorAll('.product-card-amount');
     items.forEach((element) => {
         const plus = element.querySelector('.plus');
         const minus = element.querySelector('.minus');
         const counter = element.querySelector('p');
 
+        function updateImages() {
+            const number = Number(counter.textContent);
+
+            const minusImg = minus.querySelector('img')
+            if (number === 0) {
+                minusImg.src = minusImg.dataset.empty
+            } else {
+                minusImg.src = minusImg.dataset.full
+            }
+            const plusImg = plus.querySelector('img')
+            if (number === Number(plus.dataset.stock)) {
+                plusImg.src = plusImg.dataset.empty
+            } else {
+                plusImg.src = plusImg.dataset.full
+            }
+        }
+
+        updateImages();
+
         plus.addEventListener('click', (event) => {
             const number = Number(counter.textContent);
+
+            if (number === Number(plus.dataset.stock)) return;
+
             counter.textContent = number + 1;
+            updateImages();
         });
 
         minus.addEventListener('click', (event) => {
             const number = Number(counter.textContent);
+            if (number === 0) return;
             counter.textContent = number - 1;
+
+            updateImages();
         });
     })
 })();
@@ -111,6 +146,34 @@
 
                 cards.classList.add(this.id);
             }
+        });
+    });
+})();
+
+(function () {
+    const sorting = document.querySelector('.sort details');
+    const topBar = document.querySelectorAll('.top-bar .dropdown');
+
+    if (sorting) {
+        sorting.addEventListener('mouseenter', () => {
+            sorting.open = true;
+        });
+
+        sorting.addEventListener('mouseleave', () => {
+            sorting.open = false;
+        });
+    }
+
+    topBar.forEach((element) => {
+        element.addEventListener('mouseenter', () => {
+            topBar.forEach((other) => {
+                if (other !== element) other.open = false;
+            });
+            element.open = true;
+        });
+
+        element.addEventListener('mouseleave', () => {
+            element.open = false;
         });
     });
 })();

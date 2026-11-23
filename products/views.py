@@ -1,6 +1,6 @@
 from django.db.models import Min, Max
 from django.shortcuts import render, get_object_or_404
-from .models import Product, Category, Subcategory
+from .models import Product, Category, Subcategory, Cart
 
 SORT_OPTIONS = {
     'price': 'price',
@@ -90,3 +90,8 @@ def product(request, id, slug):
     )
     
     return render(request, 'catalog/product.html', {'product': product, 'category': category, 'categories': Category.objects.all()})
+
+def cart(request, user):
+    products = Cart.objects.select_related('')
+    
+    return render(request, 'catalog/cart.html')

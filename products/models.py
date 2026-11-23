@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Chip(models.Model):
@@ -50,3 +51,11 @@ class Subcategory(models.Model):
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/images/')
+    
+class Cart(models.Model):
+    user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
+    
+class CartProduct(models.Model):
+    product = models.ForeignKey(Product, related_name='product', on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, related_name='products', on_delete=models.CASCADE)
+    amount = models.IntegerField(default=0)
