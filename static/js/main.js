@@ -177,3 +177,66 @@
         });
     });
 })();
+(function () {
+    const cart = document.querySelector('.cart');
+    if (!cart) return;
+
+    const overview = cart.querySelector('.cart-overview');
+    const totalValue = cart.querySelector('.cart-total-value');
+    const headerLink = document.querySelector('.header-inner .cart-link');
+    const headerBadge = headerLink?.querySelector('.badge');
+    const headerTotal = headerLink?.querySelector('span:not(.badge)');
+
+    function plural(number) {
+        const mod100 = Math.abs(number) % 100;
+        if (mod100 >= 11 && mod100 <= 14) return 'товаров';
+
+        const mod10 = mod100 % 10;
+        if (mod10 === 1) return 'товар';
+        if (mod10 >= 2 && mod10 <= 4) return 'товара';
+        return 'товаров';
+    }
+
+    function format(number) {
+        return number.toLocaleString('ru-RU');
+    }
+
+    function recount() {
+        let total = 0;
+        let count = 0;
+
+        cart.querySelectorAll('.cart-item').forEach((item) => {
+            const counter = item.querySelector('.product-card-amount');
+            const amount = Number(counter.querySelector('p').textContent);
+            const price = Number(counter.dataset.price);
+            const bulkPrice = Number(counter.dataset.bulkPrice);
+
+            item.querySelector('.cart-line-total').textContent = format(price * amount) + '₽';
+            item.querySelector('.cart-line-total-bulk').textContent = format(bulkPrice * amount) + '₽';
+
+            total += price * amount;
+            count += amount;
+        });
+
+        if (overview) {
+            overview.innerHTML = count + ' ' + plural(count) + ' на <span>' + format(total) + '₽</span>';
+        }
+
+        if (totalValue) {
+            totalValue.textContent = format(total) + '₽';
+        }
+
+        if (headerTotal) {
+            headerTotal.textContent = format(total) + ' руб.';
+        }
+
+        if (headerBadge) {
+            headerBadge.textContent = count;
+        }
+    }
+
+    cart.addEventListener('click', (event) => {
+        if (!event.target.closest('.plus, .minus')) return;
+        recount();
+    });
+})();

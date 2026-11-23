@@ -27,12 +27,12 @@
                         <img id="favorite" src="{% static "images/icons/favorite.png" %}" alt="Избранное">
                         <span>Избранное</span>
                     </a>
-                    <a href="#" class="action-item cart-item">
+                    <a href="{% url 'products:cart' %}" class="action-item cart-link">
                         <div class="icon-wrap">
                             <img id="cart" src="{% static "images/icons/shopping_cart.png" %}" alt="Корзина">
-                            <span class="badge">99</span>
+                            {% if cart_item_count %}<span class="badge">{{ cart_item_count }}</span>{% endif %}
                         </div>
-                        <span>5 000 руб.</span>
+                        <span>{{ cart_total_display }} руб.</span>
                     </a>
                     <a href="#" class="action-item">
                         <img id="profile" src="{% static "images/icons/profile.png" %}" alt="Личный кабинет">
@@ -84,7 +84,7 @@
                         </ul>
                         <ul class="hug category">
                             <li><a href="#">Избранное</a></li>
-                            <li><a href="#">Корзина</a></li>
+                            <li><a href="{% url 'products:cart' %}">Корзина</a></li>
                             <li><a href="#">Личный кабинет</a></li>
                         </ul>
                     </div>

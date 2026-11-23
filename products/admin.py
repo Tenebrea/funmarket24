@@ -9,9 +9,9 @@ class ProductImageInline(admin.TabularInline):
 class SubcategoryInline(admin.TabularInline):
     model = Subcategory
     extra = 1
-    
-class CartInline(admin.TabularInline):
-    model = Cart
+
+class CartProductInline(admin.TabularInline):
+    model = CartProduct
     extra = 1
 
 @admin.register(Product)
@@ -28,8 +28,14 @@ admin.site.register(Chip)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     inlines = [SubcategoryInline]
-    
+
+
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ('user')
-    inlines = [CartInline]
+    list_display = ('id', 'user')
+    inlines = [CartProductInline]
+
+
+@admin.register(CartProduct)
+class CartProductAdmin(admin.ModelAdmin):
+    list_display = ('id', 'cart', 'product', 'amount')
