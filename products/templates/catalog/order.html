@@ -42,13 +42,10 @@
         </div>
     </div>
 </section>
-<section>
+<section class="order-section">
     <div class="container">
-        <img src="{% static "images/background_baloons_img.png" %}" alt="">
         <div class="order">
             <form action="">
-
-
                 <div class="delivery">
                     <h1>Доставка</h1>
                     <div class="get-type">
@@ -75,21 +72,21 @@
                 </div>
 
 
-                <div>
+                <div class="order-bottom">
                     <div class="payment">
                         <h1>Оплата</h1>
                         <div>
                             <div class="payment-type">
-                                <input id="delivery" type="radio" choosen>
-                                <label for="delivery">Наличные</label>
+                                <input name="payment" id="cash" type="radio" checked>
+                                <label for="cahs">Наличные</label>
                             </div>
                         </div>
                         <input id="email" type="text" placeholder="Email для получения чека">
-                        <div>
-                            <input id="agreement" type="radio" choosen>
-                            <label for="agreement">Соглашаюсь на распространение указанных в заказе персональных данных третьим лицам. С условиями Публичной оферты ознакомлен.</label>
+                        <div class="agreement">
+                            <input id="agreement" type="radio" checked>
+                            <label for="agreement">Соглашаюсь на распространение указанных в заказе персональных данных третьим лицам. С условиями <u>Публичной оферты</u> ознакомлен.</label>
                         </div>
-                        <div>
+                        <div class="prices">
                             <div>
                                 <p>Доставка</p>
                                 <p>₽ 990</p>
@@ -101,10 +98,13 @@
                         </div>
                         <button>Оформить заказ</button>
                     </div>
-                    <div>
-                        <img src="{% static "images/icons/success_order.png" %}" alt="Заказ успешно оформлен">
-                        <h2>Ваш заказ №2973 оформлен.</h2>
-                        <p>Информация отправлена на Ваш email. Так же вы можете посмотреть подробности <b><u>в личном кабинете</u></b></p>
+                    <div class="order-success-wrap">
+                        <img id="background-baloons-img" src="{% static "images/background_baloons_img.png" %}" alt="">
+                        <div class="order-success">
+                            <img src="{% static "images/icons/success_order.png" %}" alt="Заказ успешно оформлен">
+                            <h2>Ваш заказ №2973 оформлен.</h2>
+                            <p>Информация отправлена на Ваш email. Так же вы можете посмотреть подробности <b><u>в личном кабинете</u></b></p>
+                        </div>
                     </div>
                 </div>
             </form>
