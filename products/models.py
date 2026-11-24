@@ -59,3 +59,7 @@ class CartProduct(models.Model):
     product = models.ForeignKey(Product, related_name='product', on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, related_name='products', on_delete=models.CASCADE)
     amount = models.IntegerField(default=1)
+    
+class Order(models.Model):
+    id = models.IntegerField(primary_key=True)
+    
