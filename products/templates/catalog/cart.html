@@ -7,7 +7,7 @@
 {% endblock title %}
 
 {% block content %}
-<section>
+<section><!-- cart-live-check -->
     <div class="container">
         <div class="top-bar">
             <ul>
@@ -57,43 +57,45 @@
                 <article class="cart-item" data-item="{{ item.id }}">
                     <img class="cart-item-img" src="{% if item.product.thumbnail_img %}{{ item.product.thumbnail_img.url }}{% else %}{% static 'images/product_placeholder.png' %}{% endif %}" alt="{{ item.product.title }}">
 
-                    <div class="cart-item-info">
+                    <div class="product-cart-body">
                         <p class="product-property">Артикул: <span>{{ item.product.artikul }}</span></p>
                         <h2><a href="{% url 'products:product' id=item.product.id slug=item.product.category.slug %}">{{ item.product.title }}</a></h2>
+                        <div class="cart-body-bottom">
+                            <div class="cart-item-info">
+                                {% if item.product.in_stock > 0 %}
+                                <div class="product-in-stock">
+                                    <img src="{% static 'images/icons/positive_mark.png' %}" alt="Товар есть в наличии">
+                                    <p>Есть в наличии</p>
+                                </div>
+                                {% else %}
+                                <div class="product-in-stock out-of-stock">
+                                    <img src="{% static 'images/icons/negative_mark.png' %}" alt="Товара нет в наличии">
+                                    <p>Нет в наличии</p>
+                                </div>
+                                {% endif %}
 
-                        {% if item.product.in_stock > 0 %}
-                        <div class="product-in-stock">
-                            <img src="{% static 'images/icons/positive_mark.png' %}" alt="Товар есть в наличии">
-                            <p>Есть в наличии</p>
+                                <p class="product-property">Бренд: <span>{{ item.product.brand }}</span></p>
+                            </div>
+                            <div class="cart-item-col">
+                                <p class="cart-col-label">Количество</p>
+                                <div class="product-card-amount" data-price="{{ item.product.price }}" data-bulk-price="{{ item.product.price_in_bulk }}">
+                                    <div class="minus"><img src="{% static 'images/icons/minus_not_active.png' %}" alt="Убрать 1 товар" data-full="{% static "images/icons/minus_active.png" %}" data-empty="{% static "images/icons/minus_not_active.png" %}"></div>
+                                    <p>{{ item.amount }}</p>
+                                    <div class="plus" data-stock="{{ item.product.in_stock }}"><img src="{% static 'images/icons/plus_active.png' %}" alt="Добавить 1 товар" data-full="{% static "images/icons/plus_active.png" %}" data-empty="{% static "images/icons/plus_not_active.png" %}"></div>
+                                </div>
+                            </div>
+                            <div class="cart-item-col">
+                                <p class="cart-col-label">Цена за уп.</p>
+                                <p class="cart-item-price">{{ item.product.price|rub }}₽/шт.</p>
+                            </div>
+                            <div class="cart-item-col">
+                                <p class="cart-col-label">Итого:</p>
+                                <div class="cart-prices">
+                                    <p class="cart-line-total">{{ item.line_total|rub }}₽</p>
+                                    <p class="cart-line-total-bulk">{{ item.line_total_bulk|rub }}₽</p>
+                                </div>
+                            </div>
                         </div>
-                        {% else %}
-                        <div class="product-in-stock out-of-stock">
-                            <img src="{% static 'images/icons/negative_mark.png' %}" alt="Товара нет в наличии">
-                            <p>Нет в наличии</p>
-                        </div>
-                        {% endif %}
-
-                        <p class="product-property">Бренд: <span>{{ item.product.brand }}</span></p>
-                    </div>
-
-                    <div class="cart-item-col">
-                        <p class="cart-col-label">Количество</p>
-                        <div class="product-card-amount" data-price="{{ item.product.price }}" data-bulk-price="{{ item.product.price_in_bulk }}">
-                            <div class="minus"><img src="{% static 'images/icons/minus_not_active.png' %}" alt="Убрать 1 товар" data-full="{% static "images/icons/minus_active.png" %}" data-empty="{% static "images/icons/minus_not_active.png" %}"></div>
-                            <p>{{ item.amount }}</p>
-                            <div class="plus" data-stock="{{ item.product.in_stock }}"><img src="{% static 'images/icons/plus_active.png' %}" alt="Добавить 1 товар" data-full="{% static "images/icons/plus_active.png" %}" data-empty="{% static "images/icons/plus_not_active.png" %}"></div>
-                        </div>
-                    </div>
-
-                    <div class="cart-item-col">
-                        <p class="cart-col-label">Цена за уп.</p>
-                        <p class="cart-item-price">{{ item.product.price|rub }}₽</p>
-                    </div>
-
-                    <div class="cart-item-col">
-                        <p class="cart-col-label">Итого:</p>
-                        <p class="cart-line-total">{{ item.line_total|rub }}₽</p>
-                        <p class="cart-line-total-bulk">{{ item.line_total_bulk|rub }}₽</p>
                     </div>
 
                     <div class="cart-item-side">
@@ -118,10 +120,7 @@
                     <p>Итого: <span class="cart-total-value">{{ total|rub }}₽</span></p>
                     <p class="cart-total-note">Без учета стоимости доставки</p>
                 </div>
-                <div class="cart-actions">
-                    <button class="primary-btn">Оформить заказ</button>
-                    <button class="outlined-btn">Купить в 1 клик</button>
-                </div>
+                <button class="primary-btn">Оформить заказ</button>
             </div>
             {% else %}
             <div class="cart-empty">
