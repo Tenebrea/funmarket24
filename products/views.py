@@ -141,3 +141,6 @@ def cart(request):
         'total': total,
         'categories': Category.objects.prefetch_related('subcategory_set'),
     })
+    
+def order(request):
+    return render(request, 'catalog/order.html')

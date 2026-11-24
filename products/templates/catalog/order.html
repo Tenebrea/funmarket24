@@ -47,35 +47,39 @@
         <img src="{% static "images/background_baloons_img.png" %}" alt="">
         <div class="order">
             <form action="">
+
+
                 <div class="delivery">
                     <h1>Доставка</h1>
-                    <div>
+                    <div class="get-type">
                         <div>
-                            <input id="delivery" type="radio" choosen>
+                            <input name="get-type" id="delivery" type="radio" checked>
                             <label for="delivery">Доставка</label>
                         </div>
                         <div>
-                            <input id="self-checkout" type="radio">
+                            <input name="get-type" id="self-checkout" type="radio">
                             <label for="self-checkout">Самовывоз</label>
                         </div>
                     </div>
                     <input id="address" type="text" placeholder="Например: г. Москва, улица Пушкина, 1">
-                    <div class="on-delivery">
+                    <div class="on-delivery row-2">
                         <input id="flat" type="text" placeholder="№ квартиры / офиса">
                         <input id="entrance" type="text" placeholder="Подъезд">
                         <input id="floor" type="text" placeholder="Этаж">
                     </div>
-                    <div>
-                        <input id="phone" type="tel" placeholder="8 (9__) ___ - __ - __">
-                        <input id="name" type="text" placeholder="Введите ваше имя">
+                    <div class="row-3">
+                        <input id="phone" name="phone" type="tel" placeholder="8 (9__) ___ - __ - __">
+                        <input id="name" name="name" type="text" placeholder="Введите ваше имя">
                     </div>
                     <textarea class="on-delivery" name="comment" id="comment" placeholder="Комментарий к заказу..."></textarea>
                 </div>
+
+
                 <div>
                     <div class="payment">
                         <h1>Оплата</h1>
                         <div>
-                            <div>
+                            <div class="payment-type">
                                 <input id="delivery" type="radio" choosen>
                                 <label for="delivery">Наличные</label>
                             </div>
