@@ -1748,6 +1748,11 @@ footer.secondary {
     font-weight: 700;
 }
 
+.payment .prices div {
+    display: flex;
+    justify-content: space-between;
+}
+
 .payment .prices div:first-child {
     padding-bottom: 30px;
 }
@@ -2018,12 +2023,12 @@ footer.secondary {
 
 #background-baloons-img {
     position: absolute;
-    bottom: -365px;
+    top: 50%;
     left: 100%;
     z-index: 0;
     width: 670px;
     max-width: none;
     height: auto;
-    transform: translateX(calc(-50% + 3px));
+    transform: translate(calc(-50% + 3px), calc(-50% - 64px));
     pointer-events: none;
 }
