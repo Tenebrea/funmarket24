@@ -1721,6 +1721,7 @@ footer.secondary {
     flex-direction: column;
     gap: 60px;
     max-width: 670px;
+    z-index: 1;
 }
 
 .payment .payment-type {
@@ -2035,6 +2036,7 @@ footer.secondary {
 
 .order-bottom {
     align-items: flex-end;
+    position: relative;
 }
 
 .order-success-wrap {
@@ -2048,14 +2050,16 @@ footer.secondary {
     width: 622px;
 }
 
+.order-section .container {
+    position: relative;
+}
+
 #background-baloons-img {
     position: absolute;
-    top: 50%;
-    left: 100%;
+    bottom: 0px;
+    right: -14%;
     z-index: 0;
     width: 670px;
     max-width: none;
     height: auto;
-    transform: translate(calc(-50% + 3px), calc(-50% - 64px));
-    pointer-events: none;
 }

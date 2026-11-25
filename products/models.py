@@ -59,7 +59,24 @@ class CartProduct(models.Model):
     product = models.ForeignKey(Product, related_name='product', on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, related_name='products', on_delete=models.CASCADE)
     amount = models.IntegerField(default=1)
+    is_bulk = models.BooleanField(default=False)
     
+class OrderStatus(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=50)
+
 class Order(models.Model):
     id = models.IntegerField(primary_key=True)
+    address = models.CharField(max_length=200)
+    flat = models.CharField(max_length=20, null=True)
+    entrance = models.CharField(max_length=20, null=True)
+    floor = models.IntegerField(null=True)
+    phone = models.CharField(max_length=13)
+    name = models.CharField(max_length=50)
+    comment = models.TextField(null=True)
+    email = models.EmailField()
+    delivery_price = models.IntegerField()
+    price = models.IntegerField()
+    status = models.ForeignKey(OrderStatus, related_name='status', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='order_user', on_delete=models.CASCADE)
     

@@ -44,8 +44,10 @@
 </section>
 <section class="order-section">
     <div class="container">
+        <img id="background-baloons-img" src="{% static "images/background_baloons_img.png" %}" alt="">
         <div class="order">
-            <form action="">
+            <form method="post" action="{% url 'products:order' %}">
+                {% csrf_token %}
                 <div class="delivery">
                     <h1>Доставка</h1>
                     <div class="get-type">
@@ -58,11 +60,11 @@
                             <label for="self-checkout">Самовывоз</label>
                         </div>
                     </div>
-                    <input id="address" type="text" placeholder="Например: г. Москва, улица Пушкина, 1">
+                    <input name="address" id="address" type="text" placeholder="Например: г. Москва, улица Пушкина, 1">
                     <div class="on-delivery row-2">
-                        <input id="flat" type="text" placeholder="№ квартиры / офиса">
-                        <input id="entrance" type="text" placeholder="Подъезд">
-                        <input id="floor" type="text" placeholder="Этаж">
+                        <input name="flat" id="flat" type="text" placeholder="№ квартиры / офиса">
+                        <input name="entrance" id="entrance" type="text" placeholder="Подъезд">
+                        <input name="floor" id="floor" type="text" placeholder="Этаж">
                     </div>
                     <div class="row-3">
                         <input id="phone" name="phone" type="tel" placeholder="8 (9__) ___ - __ - __">
@@ -81,7 +83,7 @@
                                 <label for="cash">Наличные</label>
                             </div>
                         </div>
-                        <input id="email" type="text" placeholder="Email для получения чека">
+                        <input id="email" name="email" type="text" placeholder="Email для получения чека">
                         <div class="agreement">
                             <input id="agreement" type="radio" checked>
                             <label for="agreement">Соглашаюсь на распространение указанных в заказе персональных данных третьим лицам. С условиями <u>Публичной оферты</u> ознакомлен.</label>
@@ -89,23 +91,26 @@
                         <div class="prices">
                             <div>
                                 <p>Доставка</p>
-                                <p>₽ 990</p>
+                                <p>₽ {{ delivery }}</p>
                             </div>
                             <div>
                                 <p>К оплате:</p>
-                                <p>₽ 990</p>
+                                <p>₽ {{ total }}</p>
                             </div>
                         </div>
-                        <button>Оформить заказ</button>
+                        <button type="submit">Оформить заказ</button>
                     </div>
-                    <div class="order-success-wrap">
-                        <img id="background-baloons-img" src="{% static "images/background_baloons_img.png" %}" alt="">
-                        <div class="order-success">
-                            <img src="{% static "images/icons/success_order.png" %}" alt="Заказ успешно оформлен">
-                            <h2>Ваш заказ №2973 оформлен.</h2>
-                            <p>Информация отправлена на Ваш email. Так же вы можете посмотреть подробности <b><u>в личном кабинете</u></b></p>
+                    {% if order %}
+                    <div class="order-bottom">
+                        <div class="order-success-wrap">
+                            <div class="order-success">
+                                <img src="{% static "images/icons/success_order.png" %}" alt="Заказ успешно оформлен">
+                                <h2>Ваш заказ №{{ order.id }} оформлен.</h2>
+                                <p>Информация отправлена на Ваш email. Так же вы можете посмотреть подробности <b><u>в личном кабинете</u></b></p>
+                            </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </form>
         </div>

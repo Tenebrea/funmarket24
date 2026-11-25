@@ -1,7 +1,7 @@
 from django.db.models import Min, Max
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Product, Category, Subcategory, Cart, CartProduct
+from .models import Product, Category, Subcategory, Cart, CartProduct, Order, OrderStatus
 from django.views.decorators.http import require_POST
 
 
@@ -126,7 +126,8 @@ def add_to_cart(request):
     if amount == 0:
         CartProduct.objects.filter(cart=cart, product=product).delete()
     else:
-        CartProduct.objects.update_or_create(cart=cart, product=product, defaults={'amount': amount})    
+        is_bulk = amount > 50
+        CartProduct.objects.update_or_create(cart=cart, product=product, defaults={'amount': amount, 'is_bulk': is_bulk})    
     
     return redirect('products:catalog', slug=product.category.slug)
 
@@ -167,5 +168,50 @@ def cart(request):
         'categories': Category.objects.prefetch_related('subcategory_set'),
     })
     
+@login_required
 def order(request):
-    return render(request, 'catalog/order.html')
+    cart, _ = Cart.objects.get_or_create(user=request.user)
+    items = list(cart.products.select_related('product'))
+
+    if not items:
+        return redirect('products:cart')
+    
+    delivery = 990
+    total = sum(item.product.price * item.amount for item in items) + delivery
+    
+    order = None
+    
+    if request.method == 'POST':
+        status, _ = OrderStatus.objects.get_or_create(
+            id=1, defaults={'name': 'Новый'},
+        )
+        try:
+            floor = int(request.POST.get('floor') or 0)
+        except ValueError:
+            floor = 0
+        order = Order.objects.create(
+            id=(Order.objects.aggregate(max_id=Max('id'))['max_id'] or 0) + 1,
+            address=request.POST.get('address', ''),
+            flat=request.POST.get('flat', ''),
+            entrance=request.POST.get('entrance', ''),
+            floor=floor,
+            phone=request.POST.get('phone', ''),
+            name=request.POST.get('name', ''),
+            comment=request.POST.get('comment', ''),
+            email=request.POST.get('email', ''),
+            delivery_price=990,
+            price=total,
+            status=status,
+            user=request.user,
+        )
+
+        cart.products.all().delete()
+
+    
+
+    return render(request, 'catalog/order.html', {
+        'order': order,
+        'categories': Category.objects.prefetch_related('subcategory_set'),
+        'total': total,
+        'delivery': delivery
+    })
