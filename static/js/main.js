@@ -1,3 +1,18 @@
+function readAmount(element) {
+    const counter = element.querySelector('input, p');
+    if (!counter) return 0;
+
+    return Number(counter.tagName === 'INPUT' ? counter.value : counter.textContent) || 0;
+}
+
+function writeAmount(element, amount) {
+    const counter = element.querySelector('input, p');
+    if (!counter) return;
+
+    if (counter.tagName === 'INPUT') counter.value = amount;
+    else counter.textContent = amount;
+}
+
 (function () {
     const minPrice = document.getElementById('rangeMin');
     const maxPrice = document.getElementById('rangeMax');
@@ -88,16 +103,17 @@
 })();
 
 (function () {
-
-
     const items = document.querySelectorAll('.product-card-amount');
     items.forEach((element) => {
         const plus = element.querySelector('.plus');
         const minus = element.querySelector('.minus');
-        const counter = element.querySelector('p');
+        const counter = element.querySelector('input, p');
+        if (!plus || !minus || !counter) return;
+
+        const stock = Number(plus.dataset.stock) || 0;
 
         function updateImages() {
-            const number = Number(counter.textContent);
+            const number = readAmount(element);
 
             const minusImg = minus.querySelector('img')
             if (number === 0) {
@@ -106,7 +122,7 @@
                 minusImg.src = minusImg.dataset.full
             }
             const plusImg = plus.querySelector('img')
-            if (number === Number(plus.dataset.stock)) {
+            if (number >= stock) {
                 plusImg.src = plusImg.dataset.empty
             } else {
                 plusImg.src = plusImg.dataset.full
@@ -116,21 +132,28 @@
         updateImages();
 
         plus.addEventListener('click', (event) => {
-            const number = Number(counter.textContent);
+            const number = readAmount(element);
+            if (number >= stock) return;
 
-            if (number === Number(plus.dataset.stock)) return;
-
-            counter.textContent = number + 1;
+            writeAmount(element, number + 1);
             updateImages();
         });
 
         minus.addEventListener('click', (event) => {
-            const number = Number(counter.textContent);
-            if (number === 0) return;
-            counter.textContent = number - 1;
+            const number = readAmount(element);
+            if (number <= 0) return;
 
+            writeAmount(element, number - 1);
             updateImages();
         });
+
+        if (counter.tagName === 'INPUT') {
+            counter.addEventListener('input', () => {
+                const number = Math.min(Math.max(readAmount(element), 0), stock);
+                writeAmount(element, number);
+                updateImages();
+            });
+        }
     })
 })();
 
@@ -207,7 +230,7 @@
 
         cart.querySelectorAll('.cart-item').forEach((item) => {
             const counter = item.querySelector('.product-card-amount');
-            const amount = Number(counter.querySelector('p').textContent);
+            const amount = readAmount(counter);
             const price = Number(counter.dataset.price);
             const bulkPrice = Number(counter.dataset.bulkPrice);
 

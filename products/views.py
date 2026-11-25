@@ -1,6 +1,9 @@
 from django.db.models import Min, Max
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Product, Category, Subcategory, Cart, CartProduct
+from django.views.decorators.http import require_POST
+
 
 SORT_OPTIONS = {
     'price': 'price',
@@ -104,6 +107,28 @@ def plural(number, forms):
 
     return forms[2]
 
+@login_required
+@require_POST
+def add_to_cart(request):
+    product_id = int(request.POST.get('product', ''))
+    amount = int(request.POST.get('amount'))
+    
+    product = get_object_or_404(Product, pk=product_id)
+    
+    
+    if amount == 0: return redirect('products:catalog', slug=product.category.slug)
+    
+    if (amount>product.in_stock):
+        amount = product.in_stock
+    
+    cart, _ = Cart.objects.get_or_create(user=request.user)
+    
+    if amount == 0:
+        CartProduct.objects.filter(cart=cart, product=product).delete()
+    else:
+        CartProduct.objects.update_or_create(cart=cart, product=product, defaults={'amount': amount})    
+    
+    return redirect('products:catalog', slug=product.category.slug)
 
 def cart(request):
     if request.method == 'POST' and request.user.is_authenticated:

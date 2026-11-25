@@ -53,7 +53,7 @@ class ProductImage(models.Model):
     image = models.ImageField(upload_to='products/images/')
     
 class Cart(models.Model):
-    user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE, unique=True)
     
 class CartProduct(models.Model):
     product = models.ForeignKey(Product, related_name='product', on_delete=models.CASCADE)
