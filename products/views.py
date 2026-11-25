@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Product, Category, Subcategory, Cart, CartProduct, Order, OrderStatus
 from django.views.decorators.http import require_POST
+import re
 
 
 SORT_OPTIONS = {
@@ -54,6 +55,14 @@ def catalog(request, slug):
     bounds = base.aggregate(lo=Min('price'), hi=Max('price'))
     price_lo = bounds['lo'] if bounds['lo'] is not None else 0
     price_hi = bounds['hi'] if bounds['hi'] is not None else 0
+    
+    cart_items = {}
+    
+    if request.user.is_authenticated:
+            cart, _ = Cart.objects.get_or_create(user=request.user)
+            for item in cart.products.select_related('product'):
+                amount = item.amount if (item.product.in_stock > item.amount) else item.product.in_stock
+                cart_items[item.product_id] = amount
 
     options = {
         field: base.exclude(**{field: ''})
@@ -81,6 +90,7 @@ def catalog(request, slug):
         'price_lo': price_lo,
         'price_hi': price_hi,
         'current_sort': sort,
+        'cart': cart_items
     })
 
 
@@ -92,7 +102,14 @@ def product(request, id, slug):
         category=category,
     )
     
-    return render(request, 'catalog/product.html', {'product': product, 'category': category, 'categories': Category.objects.all()})
+    cart_amount = 0
+    
+    if  request.user.is_authenticated:
+        cart_products = CartProduct.objects.select_related('product')
+        cart_amount = cart_products.get(product_id=id).amount
+        
+    
+    return render(request, 'catalog/product.html', {'product': product, 'category': category, 'categories': Category.objects.all(), 'cart_amount': cart_amount})
 
 def plural(number, forms):
     number = abs(number) % 100
@@ -136,6 +153,27 @@ def cart(request):
         item_id = request.POST.get('item')
         if item_id:
             CartProduct.objects.filter(cart__user=request.user, pk=item_id).delete()
+            return redirect('products:cart')
+        
+        product_id = int(request.POST.get('product', ''))
+        amount = int(request.POST.get('amount'))
+        
+        product = get_object_or_404(Product, pk=product_id)
+        
+        
+        if amount == 0: return redirect('products:catalog', slug=product.category.slug)
+        
+        if (amount>product.in_stock):
+            amount = product.in_stock
+        
+        cart, _ = Cart.objects.get_or_create(user=request.user)
+        
+        if amount == 0:
+            CartProduct.objects.filter(cart=cart, product=product).delete()
+        else:
+            is_bulk = amount > 50
+            CartProduct.objects.update_or_create(cart=cart, product=product, defaults={'amount': amount, 'is_bulk': is_bulk})    
+        
         return redirect('products:cart')
 
     items = []
@@ -189,17 +227,50 @@ def order(request):
             floor = int(request.POST.get('floor') or 0)
         except ValueError:
             floor = 0
+        
+        address=request.POST.get('address', '')
+        flat=request.POST.get('flat', '')
+        entrance=request.POST.get('entrance', '')
+        phone=''.join(c for c in request.POST.get('phone', '') if c.isdigit())
+        name=request.POST.get('name', '')
+        email=request.POST.get('email', '')
+        get_type=request.POST.get('get-type')
+        
+        if (not phone[:2] == "79") and (not phone[:2] == "89") or len(phone)>15:
+            return render(request, 'catalog/order.html', {
+                'order': order,
+                'categories': Category.objects.prefetch_related('subcategory_set'),
+                'total': total,
+                'delivery': delivery
+            })
+        
+        if (address=="" or name=="" or email==""):
+            return render(request, 'catalog/order.html', {
+                'order': order,
+                'categories': Category.objects.prefetch_related('subcategory_set'),
+                'total': total,
+                'delivery': delivery
+            })
+        
+        if ((flat=="" or entrance=="") and get_type=="delivery"):
+            return render(request, 'catalog/order.html', {
+                'order': order,
+                'categories': Category.objects.prefetch_related('subcategory_set'),
+                'total': total,
+                'delivery': delivery
+            })
+        
         order = Order.objects.create(
             id=(Order.objects.aggregate(max_id=Max('id'))['max_id'] or 0) + 1,
-            address=request.POST.get('address', ''),
-            flat=request.POST.get('flat', ''),
-            entrance=request.POST.get('entrance', ''),
+            address=address,
+            flat=flat,
+            entrance=entrance,
             floor=floor,
-            phone=request.POST.get('phone', ''),
-            name=request.POST.get('name', ''),
+            phone=phone,
+            name=name,
             comment=request.POST.get('comment', ''),
-            email=request.POST.get('email', ''),
-            delivery_price=990,
+            email=email,
+            delivery_price=delivery,
             price=total,
             status=status,
             user=request.user,

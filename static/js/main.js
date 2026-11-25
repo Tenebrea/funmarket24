@@ -107,7 +107,7 @@ function writeAmount(element, amount) {
     items.forEach((element) => {
         const plus = element.querySelector('.plus');
         const minus = element.querySelector('.minus');
-        const counter = element.querySelector('input, p');
+        const counter = element.querySelector('input');
         if (!plus || !minus || !counter) return;
 
         const stock = Number(plus.dataset.stock) || 0;
@@ -154,6 +154,23 @@ function writeAmount(element, amount) {
                 updateImages();
             });
         }
+    })
+})();
+
+(function () {
+    const items = document.querySelectorAll('form.cart-item-col');
+    items.forEach((form) => {
+        const plus = form.querySelector('.plus');
+        const minus = form.querySelector('.minus');
+        if (!plus || !minus) return;
+
+        plus.addEventListener('click', (event) => {
+            form.requestSubmit()
+        });
+
+        minus.addEventListener('click', (event) => {
+            form.requestSubmit()
+        });
     })
 })();
 
