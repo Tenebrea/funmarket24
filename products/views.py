@@ -104,9 +104,10 @@ def product(request, id, slug):
     
     cart_amount = 0
     
-    if  request.user.is_authenticated:
+    if request.user.is_authenticated:
         cart_products = CartProduct.objects.select_related('product')
-        cart_amount = cart_products.get(product_id=id).amount
+        if cart_products.filter(product_id=id):
+            cart_amount = cart_products.get(product_id=id).amount
         
     
     return render(request, 'catalog/product.html', {'product': product, 'category': category, 'categories': Category.objects.all(), 'cart_amount': cart_amount})
