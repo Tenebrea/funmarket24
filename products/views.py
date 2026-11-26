@@ -260,21 +260,34 @@ def order(request):
                 'delivery': delivery
             })
         
-        order = Order.objects.create(
-            id=(Order.objects.aggregate(max_id=Max('id'))['max_id'] or 0) + 1,
-            address=address,
-            flat=flat,
-            entrance=entrance,
-            floor=floor,
-            phone=phone,
-            name=name,
-            comment=request.POST.get('comment', ''),
-            email=email,
-            delivery_price=delivery,
-            price=total,
-            status=status,
-            user=request.user,
-        )
+        if (get_type=="delivery"):
+            order = Order.objects.create(
+                id=(Order.objects.aggregate(max_id=Max('id'))['max_id'] or 0) + 1,
+                address=address,
+                flat=flat,
+                entrance=entrance,
+                floor=floor,
+                phone=phone,
+                name=name,
+                comment=request.POST.get('comment', ''),
+                email=email,
+                delivery_price=delivery,
+                price=total,
+                status=status,
+                user=request.user,
+            )
+        else:
+            order = Order.objects.create(
+                id=(Order.objects.aggregate(max_id=Max('id'))['max_id'] or 0) + 1,
+                address=address,
+                phone=phone,
+                name=name,
+                email=email,
+                delivery_price=delivery,
+                price=total,
+                status=status,
+                user=request.user,
+            )
 
         cart.products.all().delete()
 

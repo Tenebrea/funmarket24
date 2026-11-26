@@ -64,6 +64,9 @@ class CartProduct(models.Model):
 class OrderStatus(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.name
 
 class Order(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -79,4 +82,7 @@ class Order(models.Model):
     price = models.IntegerField()
     status = models.ForeignKey(OrderStatus, related_name='status', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='order_user', on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"Заказ №{self.id}"
     

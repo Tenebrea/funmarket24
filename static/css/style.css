@@ -214,8 +214,11 @@ section.main {
     color: white;
     font-size: 10px;
     font-weight: 700;
-    padding: 4px 4px;
+    width: 19px;
+    height: 19px;
     border-radius: 999px;
+    text-align: center;
+    padding-top: 4px;
 }
 
 .primary-btn {
@@ -696,8 +699,7 @@ section.main {
 .product-cards {
     display: flex;
     flex-flow: row wrap;
-    gap: 20px 0px;
-    justify-content: space-between;
+    gap: 20px 30px;
     width: 100%;
 }
 
@@ -1033,7 +1035,7 @@ section.main {
 
 .cart-amount {
     font-size: 20px;
-    min-width: 90px;
+    max-width: 90px;
     text-align: center;
     border: none;
 }
