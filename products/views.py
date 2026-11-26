@@ -3,7 +3,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Product, Category, Subcategory, Cart, CartProduct, Order, OrderStatus
 from django.views.decorators.http import require_POST
-import re
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
+
 
 
 SORT_OPTIONS = {
@@ -13,6 +15,8 @@ SORT_OPTIONS = {
     '-title': '-title',
     'stock': '-in_stock',
 }
+
+ADMIN_EMAIL = "andrejbulatov8673@gmail.com"
 
 MULTI_FILTERS = ('size', 'color', 'material', 'theme', 'form')
 
@@ -260,17 +264,18 @@ def order(request):
                 'total': total,
                 'delivery': delivery
             })
-        
+        id = (Order.objects.aggregate(max_id=Max('id'))['max_id'] or 0) + 1
+        comment = request.POST.get('comment', '')
         if (get_type=="delivery"):
             order = Order.objects.create(
-                id=(Order.objects.aggregate(max_id=Max('id'))['max_id'] or 0) + 1,
+                id=id,
                 address=address,
                 flat=flat,
                 entrance=entrance,
                 floor=floor,
                 phone=phone,
                 name=name,
-                comment=request.POST.get('comment', ''),
+                comment=comment,
                 email=email,
                 delivery_price=delivery,
                 price=total,
@@ -279,7 +284,7 @@ def order(request):
             )
         else:
             order = Order.objects.create(
-                id=(Order.objects.aggregate(max_id=Max('id'))['max_id'] or 0) + 1,
+                id=id,
                 address=address,
                 phone=phone,
                 name=name,
@@ -290,8 +295,54 @@ def order(request):
                 user=request.user,
             )
 
-        cart.products.all().delete()
 
+        if (get_type=="delivery"):
+            email_to_sent = f"""
+Тип получения: С доставкой,
+Номер заказа: {id},
+Адрес: {address},
+Номер квартиры: {flat},
+Подъезд: {entrance},
+Этаж: {floor},
+Номер телефона: {phone},
+Имя: {name},
+Комментарий к заказу: {comment},
+email: {email},
+Цена доставки: {delivery},
+Цена заказа: {total}
+
+Заказанные товары:
+"""
+        else:
+            email_to_sent = f"""
+Тип получения: Самовывозом,
+Номер заказа: {id},
+Адрес: {address},
+Номер телефона: {phone},
+Имя: {name},
+email: {email},
+Цена доставки: {delivery},
+Цена заказа: {total}
+
+Заказанные товары:
+"""
+        
+        for item in items:
+            email_to_sent+=f"\n{item.product.title}: {item.amount} шт. {item.product.price_in_bulk if item.is_bulk else item.product.price} ₽/шт."
+        
+        superusers_emails = User.objects.filter(is_superuser=True).values_list('email')
+        emails = [i[0] for i in superusers_emails] + [email]
+        send_mail(
+            subject=f"Заказ №{id} успешно отправлен",
+            message=email_to_sent,
+            from_email="from@example.com",
+            recipient_list=emails
+        )
+        
+        cart.products.all().delete()
+        
+    
+    
     
 
     return render(request, 'catalog/order.html', {
